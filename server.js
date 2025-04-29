@@ -1,31 +1,47 @@
-const server = Bun.serve({
-  port: 3001, // use port 3001 to avoid conflicts
-  async fetch(req) {
-    const url = new URL(req.url);
-    let filePath = './public' + url.pathname;
+import { serve } from 'bun';
 
-    // Serve index.html for the root path
-    if (url.pathname === '/' || url.pathname === '') {
-      filePath = './public/index.html';
-    }
+// MIME types for different file extensions
+const mimeTypes = {
+    '.html': 'text/html',
+    '.css': 'text/css',
+    '.js': 'application/javascript',
+    '.png': 'image/png',
+    '.jpg': 'image/jpeg',
+    '.svg': 'image/svg+xml',
+};
 
-    try {
-      const file = Bun.file(filePath);
-      const contentType = getContentType(filePath);
-      return new Response(file, {
-        headers: { 'Content-Type': contentType }
-      });
-    } catch (e) {
-      return new Response('File not found', { status: 404 });
-    }
-  },
+serve({
+    async fetch(req) { // Added async
+        const url = new URL(req.url);
+        // Default to index.html if the path is '/'
+        let filePath = url.pathname === '/' ? 'public/index.html' : `public${url.pathname}`;
+
+        try {
+            const file = Bun.file(filePath);
+            // Check if the file exists using await file.exists()
+            if (!(await file.exists())) { // Changed this line
+                return new Response('Not Found', { status: 404 });
+            }
+
+            // Determine the MIME type based on file extension
+            const ext = filePath.substring(filePath.lastIndexOf('.')).toLowerCase();
+            const contentType = mimeTypes[ext] || 'application/octet-stream';
+
+            return new Response(file, {
+                headers: {
+                    'Content-Type': contentType,
+                },
+            });
+        } catch (e) {
+            console.error(`Error serving file: ${filePath}`, e);
+            return new Response('Internal Server Error', { status: 500 });
+        }
+    },
+    port: 3000,
+    hostname: 'localhost',
+    error(error) {
+        return new Response(`Error: ${error.message}`, { status: 500 });
+    },
 });
 
-function getContentType(filePath) {
-  if (filePath.endsWith('.html')) return 'text/html';
-  if (filePath.endsWith('.css')) return 'text/css';
-  if (filePath.endsWith('.js')) return 'text/javascript';
-  return 'text/plain';
-}
-
-console.log(`eTinda server running at http://localhost:${server.port}`);
+console.log('Server running at http://localhost:3000');

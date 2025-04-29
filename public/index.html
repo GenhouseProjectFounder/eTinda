@@ -1,62 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>eTinda - Sustainable Shopping</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Open+Sans:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eTinda - Sustainable Selling Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Hero Section -->
-  <header class="hero">
-    <div class="hero-content">
-      <h1>Welcome to eTinda</h1>
-      <p>Shop sustainably with eco-friendly products from local artisans in the Philippines.</p>
-      <button class="cta-button" id="shop-now-btn">Shop Now</button>
-    </div>
-  </header>
+    <!-- Hero Section -->
+    <header class="hero">
+        <nav class="navbar">
+            <div class="logo">eTinda</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#join">Join Now</a></li>
+            </ul>
+            <button class="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+        </nav>
+        <div class="hero-content">
+            <h1>Empower Your Sustainable Business with eTinda</h1>
+            <p>Join a platform that celebrates eco-conscious products and organic lifestyles.</p>
+            <button class="cta-button" onclick="scrollToSection('join')">Start Selling Today</button>
+        </div>
+    </header>
 
-  <!-- Features Section -->
-  <section class="features">
-    <h2>Why Choose eTinda?</h2>
-    <div class="features-grid">
-      <div class="feature-item">
-        <i class="fas fa-leaf feature-icon"></i>
-        <h3>Sustainable Products</h3>
-        <p>Browse organic, eco-friendly goods made with care.</p>
-      </div>
-      <div class="feature-item">
-        <i class="fas fa-truck feature-icon"></i>
-        <h3>Track Orders Easily</h3>
-        <p>Monitor your purchases with a clear visual timeline.</p>
-      </div>
-      <div class="feature-item">
-        <i class="fas fa-star feature-icon"></i>
-        <h3>Earn ePoints</h3>
-        <p>Get rewarded with every order to save more.</p>
-      </div>
-      <div class="feature-item">
-        <i class="fas fa-map-marked-alt feature-icon"></i>
-        <h3>Shop Local</h3>
-        <p>Support nearby artisans and small businesses.</p>
-      </div>
-    </div>
-  </section>
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <h2>Why Choose eTinda?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <img src="https://via.placeholder.com/50" alt="Eco-friendly icon">
+                <h3>Eco-Friendly Focus</h3>
+                <p>Showcase your sustainable products to a community that values green living.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://via.placeholder.com/50" alt="Store setup icon">
+                <h3>Easy Store Setup</h3>
+                <p>Get started with a step-by-step guide and customizable templates.</p>
+            </div>
+            <div class="feature-card">
+                <img src="https://via.placeholder.com/50" alt="Marketing icon">
+                <h3>Powerful Marketing Tools</h3>
+                <p>Boost sales with discount codes, sales, and BOGO deals.</p>
+            </div>
+        </div>
+    </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-links">
-      <a href="#" class="footer-link">Privacy</a>
-      <a href="#" class="footer-link">Share</a>
-      <a href="#" class="footer-link">Shopping Policy</a>
-      <a href="#" class="footer-link">Report</a>
-    </div>
-    <p>© 2025 eTinda. All rights reserved.</p>
-  </footer>
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <h2>What Sellers Say</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p>"eTinda helped me grow my artisan business sustainably!"</p>
+                <h4>ArtisanAlly</h4>
+            </div>
+            <div class="testimonial-card">
+                <p>"The marketing tools are a game-changer for my store."</p>
+                <h4>GlobalBeans</h4>
+            </div>
+        </div>
+    </section>
 
-  <!-- Link to JavaScript -->
-  <script src="script.js"></script>
+    <!-- Join Section -->
+    <section id="join" class="join">
+        <h2>Ready to Sell Sustainably?</h2>
+        <button class="cta-button">Join eTinda Now</button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Shipping Policy</a>
+            <a href="#">Support</a>
+        </div>
+        <p>&copy; 2025 eTinda. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
