@@ -12,7 +12,7 @@
     *   Build core user web app features, including product listings and order tracking.
     *   Implement JavaScript for interactivity (e.g., ePoints tracking, favorites).
     *   Conduct usability testing and iterate based on feedback.
-    *   Ensure responsiveness across desktop, tablet, and mobile devices.
+    *   Implement responsive design that adapts to desktop, tablet, and mobile screens.
 *   **Timeline:** May 6–May 15, 2025.
 
 ## Phase 3: Seller Dashboard & Deployment

@@ -19,7 +19,7 @@ The eTinda Web App is a responsive web application crafted to facilitate seamles
 *   **Order Oversight:** Track and update order statuses, input bulk tracking numbers, and generate invoices efficiently.
 *   **Notification System:** Receive categorized alerts (All, Product, Order, Promos & Alerts) to stay informed about stock levels and order updates.
 *   **Performance Insights:** Access basic analytics to monitor sales trends and identify top-performing products.
-*   **Cross-Device Compatibility:** Ensure usability across desktop, tablet, and mobile devices through responsive design.
+*   **Responsive Web Platform:** Optimized for all devices through responsive design, ensuring full functionality on desktop, tablet, and mobile browsers.
 
 ## 4. Success Criteria
 *   **Functional Delivery:** A fully operational user web app and seller dashboard, deployed on a platform like GitHub Pages, with core features implemented.
