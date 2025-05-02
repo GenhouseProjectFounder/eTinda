@@ -1,0 +1,14 @@
+/* Basic styles for eTinda */
+body {
+    font-family: 'Open Sans', sans-serif; /* Default body font */
+    background-color: #FEFCEF; /* Cream background */
+    color: #3B3D32; /* Dark Gray text */
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif; /* Headings font */
+}
+
+/* Add more styles based on design guidelines and components */
