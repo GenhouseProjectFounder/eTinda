@@ -1,188 +1,81 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Mobile Menu Toggle
-  const menuToggle = document.querySelector('.menu-toggle');
-  const navLinks = document.querySelector('.nav-links');
-
-  menuToggle.addEventListener('click', () => {
+    // Toggle mobile menu
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+  
+    menuToggle.addEventListener('click', () => {
       navLinks.classList.toggle('active');
-      const isExpanded = navLinks.classList.contains('active');
-      menuToggle.setAttribute('aria-expanded', isExpanded);
-      menuToggle.textContent = isExpanded ? '✕' : '☰';
-  });
-
-  // Smooth Scrolling for Navigation Links
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
-          e.preventDefault();
-          const targetId = anchor.getAttribute('href').substring(1);
-          scrollToSection(targetId);
-          // Close mobile menu if open
-          if (navLinks.classList.contains('active')) {
-              navLinks.classList.remove('active');
-              menuToggle.setAttribute('aria-expanded', 'false');
-              menuToggle.textContent = '☰';
-          }
-      });
-  });
-
-  // Smooth Scrolling Function (defined globally for the inline onclick)
-  window.scrollToSection = function(sectionId) { // Changed to be globally accessible
-      const section = document.getElementById(sectionId);
-      if (section) {
-          section.scrollIntoView({ behavior: 'smooth' });
-      }
-  }
-
-  // Join Popup Form
-  const joinButtons = document.querySelectorAll('.cta-button');
-  let popupForm = null;
-  let escapeKeyListener = null; // To store listener reference for removal
-  let focusTrapListener = null; // To store listener reference for removal
-  let outsideClickListener = null; // To store listener reference for removal
-
-  joinButtons.forEach(button => {
-      // Check if the button is specifically the "Join eTinda Now" button
-      // It's better to add an ID or data-attribute in HTML, but checking text works for now.
-      if (button.textContent.trim() === 'Join eTinda Now') {
-          button.addEventListener('click', (e) => {
-              e.preventDefault();
-              showJoinPopup();
-          });
-      }
-      // Note: The other button "Start Selling Today" uses an inline onclick="scrollToSection('join')"
-      // which needs the scrollToSection function to be global.
-  });
-
-  function showJoinPopup() {
-      // Remove existing popup if it exists
-      if (popupForm) {
-          popupForm.remove();
-      }
-
-      // Create Popup
-      popupForm = document.createElement('div');
-      popupForm.classList.add('popup'); // Needs corresponding CSS
-      popupForm.setAttribute('role', 'dialog');
-      popupForm.setAttribute('aria-modal', 'true'); // Added aria-modal
-      popupForm.setAttribute('aria-labelledby', 'popup-title');
-      popupForm.innerHTML = `
-          <div class="popup-content"> // Needs corresponding CSS
-              <button type="button" class="close-popup" aria-label="Close dialog">&times;</button> // Moved close button up, added aria-label
-              <h3 id="popup-title">Join eTinda</h3>
-              <p>Start selling your sustainable products today!</p>
-              <form id="join-form">
-                  <label for="seller-name">Name:</label>
-                  <input type="text" id="seller-name" name="name" maxlength="50" required aria-required="true">
-                  <label for="seller-email">Email:</label>
-                  <input type="email" id="seller-email" name="email" maxlength="100" required aria-required="true">
-                  <label for="store-name">Store Name:</label>
-                  <input type="text" id="store-name" name="store-name" maxlength="50" required aria-required="true">
-                  <button type="submit">Submit</button>
-              </form>
-          </div>
+    });
+  
+    // Sample product data (replace with API call in production)
+    const products = [
+      {
+        id: 1,
+        name: 'Organic Handwoven Basket',
+        price: 500,
+        image: '../images/sample-product.jpg',
+      },
+      // Add more products as needed
+    ];
+  
+    // Populate product grid
+    const productGrid = document.querySelector('.product-grid');
+    products.forEach(product => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <img src="${product.image}" alt="${product.name}">
+        <h2>${product.name}</h2>
+        <p>₱${product.price.toFixed(2)}</p>
+        <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
       `;
-
-      document.body.appendChild(popupForm);
-      // Focus the close button initially for better accessibility
-      const closeButton = popupForm.querySelector('.close-popup');
-      closeButton.focus();
-
-      // Trap focus within the popup
-      const focusableElements = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-      const firstFocusableElement = popupForm.querySelectorAll(focusableElements)[0];
-      const focusableContent = popupForm.querySelectorAll(focusableElements);
-      const lastFocusableElement = focusableContent[focusableContent.length - 1];
-
-      focusTrapListener = (e) => trapFocus(e, firstFocusableElement, lastFocusableElement);
-      document.addEventListener('keydown', focusTrapListener);
-
-      // Handle Form Submission (Client-Side Only for Now)
-      const form = popupForm.querySelector('#join-form');
-      form.addEventListener('submit', handleFormSubmit);
-
-      // Close Popup Button
-      closeButton.addEventListener('click', closePopup);
-
-      // Close on Escape Key
-      escapeKeyListener = (e) => handleEscape(e);
-      document.addEventListener('keydown', escapeKeyListener);
-
-      // Close on clicking outside the popup content
-      outsideClickListener = (e) => handleOutsideClick(e);
-      popupForm.addEventListener('click', outsideClickListener);
-
-      function handleFormSubmit(e) {
-          e.preventDefault();
-          const name = form.querySelector('#seller-name').value;
-          const email = form.querySelector('#seller-email').value;
-          const storeName = form.querySelector('#store-name').value;
-
-          if (name && email && storeName) {
-              alert(`Thank you, ${name}! We'll reach out to ${email} to help you set up ${storeName} on eTinda.`);
-              closePopup();
-          } else {
-              alert('Please fill out all fields.');
-          }
+      productGrid.appendChild(card);
+    });
+  
+    // Cart functionality
+    let cart = [];
+    productGrid.addEventListener('click', (e) => {
+      if (e.target.classList.contains('add-to-cart')) {
+        const productId = e.target.getAttribute('data-id');
+        const product = products.find(p => p.id == productId);
+        cart.push(product);
+        alert(`${product.name} added to cart!`);
+        // Update cart UI or send to server in production
       }
-
-      function handleEscape(e) {
-          if (e.key === 'Escape' && popupForm) {
-              closePopup();
+    });
+  
+    // Admin Dashboard (placeholder, assumes admin page exists)
+    if (document.querySelector('.admin-dashboard')) {
+      // Sample user data (replace with API call)
+      const users = [
+        { id: 1, name: 'Maria Cruz', role: 'Buyer', status: 'Active' },
+        { id: 2, name: 'Carlo Reyes', role: 'Seller', status: 'Pending' },
+      ];
+  
+      const userTableBody = document.querySelector('.user-table tbody');
+      if (userTableBody) {
+        users.forEach(user => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${user.name}</td>
+            <td>${user.role}</td>
+            <td>${user.status}</td>
+            <td>
+              <button class="action-button" data-id="${user.id}" data-action="approve">Approve</button>
+              <button class="action-button" data-id="${user.id}" data-action="deactivate">Deactivate</button>
+            </td>
+          `;
+          userTableBody.appendChild(row);
+        });
+  
+        userTableBody.addEventListener('click', (e) => {
+          if (e.target.classList.contains('action-button')) {
+            const userId = e.target.getAttribute('data-id');
+            const action = e.target.getAttribute('data-action');
+            alert(`Action: ${action} for user ID ${userId}`);
+            // In production, send API request to update user status
           }
+        });
       }
-
-      function handleOutsideClick(e) {
-          if (e.target === popupForm) { // Clicked on the background overlay
-              closePopup();
-          }
-      }
-
-      function trapFocus(e, firstFocusableElement, lastFocusableElement) {
-          let isTabPressed = e.key === 'Tab' || e.keyCode === 9;
-          if (!isTabPressed || !popupForm) {
-              return;
-          }
-
-          if (e.shiftKey) { // Shift + Tab
-              if (document.activeElement === firstFocusableElement) {
-                  lastFocusableElement.focus();
-                  e.preventDefault();
-              }
-          } else { // Tab
-              if (document.activeElement === lastFocusableElement) {
-                  firstFocusableElement.focus();
-                  e.preventDefault();
-              }
-          }
-      }
-
-      function closePopup() {
-          if (popupForm) {
-              document.removeEventListener('keydown', escapeKeyListener);
-              document.removeEventListener('keydown', focusTrapListener);
-              // No need to remove outsideClickListener from popupForm as it gets removed with the element
-              popupForm.remove();
-              popupForm = null;
-              escapeKeyListener = null;
-              focusTrapListener = null;
-              outsideClickListener = null;
-              // Optionally return focus to the button that opened the popup
-              joinButtons.forEach(button => {
-                  if (button.textContent.trim() === 'Join eTinda Now') {
-                      button.focus();
-                  }
-              });
-          }
-      }
-  } // End of showJoinPopup
-
-  // Ensure Keyboard Navigation for Accessibility
-  document.querySelectorAll('.nav-links a, .cta-button').forEach(element => {
-      element.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              element.click();
-          }
-      });
+    }
   });
-});

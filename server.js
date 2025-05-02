@@ -1,47 +1,63 @@
 import { serve } from 'bun';
 
-// MIME types for different file extensions
-const mimeTypes = {
-    '.html': 'text/html',
-    '.css': 'text/css',
-    '.js': 'application/javascript',
-    '.png': 'image/png',
-    '.jpg': 'image/jpeg',
-    '.svg': 'image/svg+xml',
-};
+// Sample data (replace with database in production)
+const products = [
+  { id: 1, name: 'Organic Handwoven Basket', price: 500, image: '/images/sample-product.jpg' },
+];
+
+const users = [
+  { id: 1, name: 'Maria Cruz', role: 'Buyer', status: 'Active' },
+  { id: 2, name: 'Carlo Reyes', role: 'Seller', status: 'Pending' },
+];
 
 serve({
-    async fetch(req) { // Added async
-        const url = new URL(req.url);
-        // Default to index.html if the path is '/'
-        let filePath = url.pathname === '/' ? 'public/index.html' : `public${url.pathname}`;
+  port: 3000,
+  async fetch(req) {
+    const url = new URL(req.url);
+    const path = url.pathname;
 
-        try {
-            const file = Bun.file(filePath);
-            // Check if the file exists using await file.exists()
-            if (!(await file.exists())) { // Changed this line
-                return new Response('Not Found', { status: 404 });
-            }
+    // Serve static files from public
+    if (path === '/' || path.startsWith('/public') || path.endsWith('.html') || path.endsWith('.css') || path.endsWith('.js')) {
+      let filePath = path === '/' ? 'public/index.html' : path.slice(1);
+      try {
+        const file = await Bun.file(filePath).text();
+        const contentType = filePath.endsWith('.html') ? 'text/html' :
+                           filePath.endsWith('.css') ? 'text/css' :
+                           filePath.endsWith('.js') ? 'application/javascript' : 'text/plain';
+        return new Response(file, { headers: { 'Content-Type': contentType } });
+      } catch (e) {
+        return new Response('File not found', { status: 404 });
+      }
+    }
 
-            // Determine the MIME type based on file extension
-            const ext = filePath.substring(filePath.lastIndexOf('.')).toLowerCase();
-            const contentType = mimeTypes[ext] || 'application/octet-stream';
+    // API endpoints
+    if (path === '/api/products') {
+      return new Response(JSON.stringify(products), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
-            return new Response(file, {
-                headers: {
-                    'Content-Type': contentType,
-                },
-            });
-        } catch (e) {
-            console.error(`Error serving file: ${filePath}`, e);
-            return new Response('Internal Server Error', { status: 500 });
-        }
-    },
-    port: 3000,
-    hostname: 'localhost',
-    error(error) {
-        return new Response(`Error: ${error.message}`, { status: 500 });
-    },
+    if (path === '/api/users' && req.method === 'GET') {
+      return new Response(JSON.stringify(users), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    if (path.startsWith('/api/users/') && req.method === 'POST') {
+      const id = parseInt(path.split('/')[3]);
+      const body = await req.json();
+      const user = users.find(u => u.id === id);
+      if (user) {
+        user.status = body.status; // e.g., 'Active', 'Deactivated'
+        return new Response(JSON.stringify(user), {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+      return new Response('User not found', { status: 404 });
+    }
+
+    return new Response('Not found', { status: 404 });
+  },
 });
 
 console.log('Server running at http://localhost:3000');
