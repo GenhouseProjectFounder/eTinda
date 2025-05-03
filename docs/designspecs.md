@@ -1,0 +1,8 @@
+# Add New Product Form Specs:
+
+- **Background:** #FEFCEF
+- **Title:** Inter, 24px, bold, #3B3D32
+- **Input Fields:** Open Sans, 16px, #3B3D32
+- **Button:** #A6D017, 10px padding, 4px border-radius
+- **Mobile:** Stack fields vertically, title 20px
+m

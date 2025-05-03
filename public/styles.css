@@ -1,8 +1,21 @@
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
   font-family: 'Open Sans', sans-serif;
   background-color: #FEFCEF;
   color: #3B3D32;
+  display: flex;
+  flex-direction: column;
+sis: flex;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
 }
 
 h1, h2, h3 {
@@ -49,51 +62,384 @@ h1, h2, h3 {
   cursor: pointer;
 }
 
-.product-grid {
+.hero {
+  text-align: center;
+  padding: 5rem 2rem;
+  background-color: #F5F5F5;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+}
+
+.cta-button {
+  background-color: #FF8463;
+  color: #FEFCEF;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin: 0.2rem;
+}
+
+.cta-button:hover {
+  background-color: #E67558;
+}
+
+.large-cta {
+  padding: 1.2rem 2.5rem;
+  font-size: 1.4rem;
+}
+
+.favorite-button {
+  background-color: #A6D017;
+}
+
+.favorite-button:hover {
+  background-color: #8EB012;
+}
+
+.buy-button {
+  background-color: #3B3D32;
+}
+
+.buy-button:hover {
+  background-color: #2A2B21;
+}
+
+.values {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  text-align: center;
+}
+
+.values h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.value-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
 }
 
-.product-card {
+.value-card {
+  background-color: #FFFFFF;
+  border: 1px solid #3B3D32;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.value-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.value-card p {
+  font-size: 1rem;
+}
+
+.fair-trade {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #FFFFFF;
+}
+
+.fair-trade h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.fair-trade p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.fair-trade-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.fair-trade-card {
+  background-color: #F5F5F5;
+  border: 1px solid #3B3D32;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.fair-trade-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.fair-trade-card p {
+  font-size: 1rem;
+}
+
+.carousel-section {
+  padding: 2rem;
+  background-color: #F5F5F5;
+  text-align: center;
+}
+
+.carousel-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 1.5rem;
+  padding: 1rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.carousel-item {
+  flex: 0 0 220px;
   background-color: #FFFFFF;
   border: 1px solid #3B3D32;
   border-radius: 8px;
   padding: 1rem;
+  scroll-snap-align: start;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.product-card img {
+.carousel-item img {
   max-width: 100%;
   height: auto;
   border-radius: 4px;
+  margin-bottom: 0.5rem;
 }
 
-.product-card h2 {
-  font-size: 1.2rem;
-  margin: 0.5rem 0;
+.carousel-item h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
 }
 
-.product-card p {
+.carousel-item p {
+  font-size: 0.8rem;
+  margin-bottom: 0.5rem;
+  flex-grow: 1;
+}
+
+.carousel-item .button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  justify-content: center;
+}
+
+.carousel::-webkit-scrollbar {
+  height: 8px;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+  background-color: #A6D017;
+  border-radius: 4px;
+}
+
+.testimonials {
+  padding: 2rem;
+  background-color: #FFFFFF;
+  text-align: center;
+}
+
+.testimonials h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonial-card {
+  background-color: #F5F5F5;
+  border: 1px solid #3B3D32;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.testimonial-card p {
   font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.testimonial-card .author {
+  font-style: italic;
   color: #FF8463;
 }
 
-.add-to-cart {
-  background-color: #A6D017;
-  color: #FEFCEF;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-family: 'Inter', sans-serif;
+.learn-more {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.add-to-cart:hover {
-  background-color: #8EB012;
+.learn-more h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.learn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.learn-card {
+  background-color: #FFFFFF;
+  border: 1px solid #3B3D32;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.learn-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.learn-card p {
+  font-size: 1rem;
+}
+
+.faq {
+  padding: 2rem;
+  background-color: #F5F5F5;
+  text-align: center;
+}
+
+.faq h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.faq-item {
+  background-color: #FFFFFF;
+  border: 1px solid #3B3D32;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.faq-item h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.faq-item p {
+  font-size: 1rem;
+}
+
+.contact {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.contact h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.contact-card {
+  background-color: #FFFFFF;
+  border: 1px solid #3B3D32;
+  border-radius: 8px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.signup-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.signup-form label {
+  font-size: 1rem;
+  text-align: left;
+}
+
+.signup-form input,
+.signup-form select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #3B3D32;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.signup-form input:focus,
+.signup-form select:focus {
+  outline: 2px solid #FF8463;
+  outline-offset: 2px;
+}
+
+.guest-link {
+  color: #A6D017;
+  text-decoration: underline;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+.guest-link:hover {
+  color: #8EB012;
+}
+
+.image-anchor {
+  display: block;
+  text-align: center;
+}
+
+.image-anchor img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
 }
 
 footer {
@@ -101,59 +447,9 @@ footer {
   color: #FEFCEF;
   text-align: center;
   padding: 1rem;
-  position: relative;
-  bottom: 0;
   width: 100%;
 }
 
-/* Admin Dashboard Styles */
-.admin-dashboard {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.admin-dashboard h1 {
-  font-size: 1.8rem;
-  margin-bottom: 1rem;
-}
-
-.user-table {
-  width: 100%;
-  border-collapse: collapse;
-  background-color: #FFFFFF;
-  border: 1px solid #3B3D32;
-}
-
-.user-table th, .user-table td {
-  padding: 0.8rem;
-  text-align: left;
-  border-bottom: 1px solid #3B3D32;
-}
-
-.user-table th {
-  background-color: #A6D017;
-  color: #FEFCEF;
-}
-
-.user-table tr:hover {
-  background-color: #F5F5F5;
-}
-
-.action-button {
-  background-color: #FF8463;
-  color: #FEFCEF;
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.action-button:hover {
-  background-color: #E67558;
-}
-
-/* Mobile-First Responsive Design */
 @media (max-width: 768px) {
   .nav-links {
     display: none;
@@ -174,22 +470,37 @@ footer {
     display: block;
   }
 
-  .product-grid {
-    grid-template-columns: 1fr;
+  .hero h1 {
+    font-size: 2rem;
   }
 
-  .admin-dashboard {
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .values, .fair-trade, .carousel-section, .testimonials, .learn-more, .faq, .contact {
     padding: 1rem;
   }
 
-  .user-table th, .user-table td {
-    font-size: 0.9rem;
-    padding: 0.5rem;
+  .contact-grid, .learn-grid, .fair-trade-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .carousel {
+    gap: 1rem;
+  }
+
+  .carousel-item {
+    flex: 0 0 180px;
+  }
+
+  .carousel-item .button-group {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
-/* Accessibility */
 :focus {
-  outline: 2px solid #FF8463;
-  outline-offset: 2px;
+  outline: 2px solid #FF8463 | 1rem;
+  outline-offset; 2px;
 }

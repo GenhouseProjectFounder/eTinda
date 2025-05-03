@@ -1,81 +1,99 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Toggle mobile menu
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
-  
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
+  // Menu Toggle
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+  });
+
+  // Carousel Navigation
+  const carousels = document.querySelectorAll('.carousel');
+  carousels.forEach(carousel => {
+    let isDragging = false;
+    let startX;
+    let scrollLeft;
+
+    carousel.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+      carousel.style.cursor = 'grabbing';
     });
-  
-    // Sample product data (replace with API call in production)
-    const products = [
-      {
-        id: 1,
-        name: 'Organic Handwoven Basket',
-        price: 500,
-        image: '../images/sample-product.jpg',
-      },
-      // Add more products as needed
-    ];
-  
-    // Populate product grid
-    const productGrid = document.querySelector('.product-grid');
-    products.forEach(product => {
-      const card = document.createElement('div');
-      card.className = 'product-card';
-      card.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h2>${product.name}</h2>
-        <p>₱${product.price.toFixed(2)}</p>
-        <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
-      `;
-      productGrid.appendChild(card);
+
+    carousel.addEventListener('mouseleave', () => {
+      isDragging = false;
+      carousel.style.cursor = 'grab';
     });
-  
-    // Cart functionality
-    let cart = [];
-    productGrid.addEventListener('click', (e) => {
-      if (e.target.classList.contains('add-to-cart')) {
-        const productId = e.target.getAttribute('data-id');
-        const product = products.find(p => p.id == productId);
-        cart.push(product);
-        alert(`${product.name} added to cart!`);
-        // Update cart UI or send to server in production
-      }
+
+    carousel.addEventListener('mouseup', () => {
+      isDragging = false;
+      carousel.style.cursor = 'grab';
     });
-  
-    // Admin Dashboard (placeholder, assumes admin page exists)
-    if (document.querySelector('.admin-dashboard')) {
-      // Sample user data (replace with API call)
-      const users = [
-        { id: 1, name: 'Maria Cruz', role: 'Buyer', status: 'Active' },
-        { id: 2, name: 'Carlo Reyes', role: 'Seller', status: 'Pending' },
-      ];
-  
-      const userTableBody = document.querySelector('.user-table tbody');
-      if (userTableBody) {
-        users.forEach(user => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-            <td>${user.name}</td>
-            <td>${user.role}</td>
-            <td>${user.status}</td>
-            <td>
-              <button class="action-button" data-id="${user.id}" data-action="approve">Approve</button>
-              <button class="action-button" data-id="${user.id}" data-action="deactivate">Deactivate</button>
-            </td>
-          `;
-          userTableBody.appendChild(row);
-        });
-  
-        userTableBody.addEventListener('click', (e) => {
-          if (e.target.classList.contains('action-button')) {
-            const userId = e.target.getAttribute('data-id');
-            const action = e.target.getAttribute('data-action');
-            alert(`Action: ${action} for user ID ${userId}`);
-            // In production, send API request to update user status
-          }
-        });
-      }
+
+    carousel.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - carousel.offsetLeft;
+      const walk = (x - startX) * 2;
+      carousel.scrollLeft = scrollLeft - walk;
+    });
+
+    // Touch support
+    carousel.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      startX = e.touches[0].pageX - carousel.offsetLeft;
+      scrollLeft = carousel.scrollLeft;
+    });
+
+    carousel.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    carousel.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const x = e.touches[0].pageX - carousel.offsetLeft;
+      const walk = (x - startX) * 2;
+      carousel.scrollLeft = scrollLeft - walk;
+    });
+  });
+
+  // Form Submission
+  const signupForm = document.querySelector('.signup-form');
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const role = document.getElementById('role').value;
+
+    if (name && email && role) {
+      alert(`Thank you, ${name}! You've signed up as a ${role}. We'll send updates to ${email}.`);
+      signupForm.reset();
+    } else {
+      alert('Please fill in all fields.');
     }
   });
+
+  // Button Interactions
+  const favoriteButtons = document.querySelectorAll('.favorite-button');
+  favoriteButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      button.textContent = button.textContent === 'Favorite' ? 'Favorited' : 'Favorite';
+      button.classList.toggle('favorited');
+    });
+  });
+
+  const addToCartButtons = document.querySelectorAll('.cta-button:not(.favorite-button):not(.buy-button)');
+  addToCartButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      alert('Item added to cart!');
+    });
+  });
+
+  const buyButtons = document.querySelectorAll('.buy-button');
+  buyButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      alert('Proceeding to checkout...');
+    });
+  });
+});
