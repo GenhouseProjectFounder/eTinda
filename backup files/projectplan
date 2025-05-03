@@ -1,0 +1,134 @@
+eTinda Web App Project Plan
+This project plan outlines the strategy for developing and launching eTinda, a responsive web application designed to enable eco-conscious users to browse and purchase sustainable products online and empower small business sellers in the Philippines to manage their products and orders effectively.
+Project Structure
+The plan includes the following documents, each provided as a Markdown artifact to save in your eTinda/docs folder in VS Code:
+
+vision.md: Defines the project’s purpose, goals, and principles.
+scope.md: Outlines what’s included and excluded in the project.
+personas.md: Describes target users (buyers and sellers).
+requirements.md: Lists functional and non-functional requirements.
+use-cases.md: Details how users interact with the platform.
+user-stories.md: Provides user-centered feature descriptions.
+design-guidelines.md: Specifies visual and UX principles.
+wireframes.md: Summarizes UI design considerations (referencing Figma).
+roadmap.md: Outlines timeline and milestones.
+stakeholders.md: Identifies key stakeholders.
+moodboard.md: Captures the visual and emotional inspiration for the design.
+designstyle.md: Defines the design style and layout approach.
+branding.md: Establishes the brand identity and voice.
+common-commands.md: Lists common terminal commands for project management.
+project-plan.md: This document, providing the overall project strategy.
+
+VS Code Project Setup
+Ensure your project folder is set up:
+/eTinda
+  /docs
+    (all .md files listed above)
+  /public
+    /html
+      index.html
+    /css
+      styles.css
+    /js
+      script.js
+  server.js
+  /images
+
+For each .md file:
+
+In Explorer, right-click eTinda/docs > New File > Name it (e.g., vision.md).
+Copy the content from the artifact, paste into the file, and save (Ctrl + S or Cmd + S).
+Repeat for all 15 files.
+
+1. Vision (Defined in vision.md)
+
+Project Purpose: eTinda is a responsive web app facilitating online shopping for eco-conscious consumers and empowering sustainable sellers in the Philippines with inventory and order management tools.
+Target Audience: Eco-conscious buyers (limited digital literacy) and sustainable sellers (small business owners).
+Key Features: User Web App (product listings, order tracking, ePoints, ratings) and Seller Dashboard (product management, notifications, analytics).
+Success Criteria: Functional delivery on GitHub Pages, positive usability feedback, clean code, capstone proficiency.
+Constraints: Timeline to early May 2025, HTML/CSS/JS stack, Figma/VS Code/AI tools.
+Assumptions: Figma provides UI specs, AI tools assist, development tools are accessible.
+
+2. Scope (Defined in scope.md)
+
+Inclusions: Target audience (buyers/sellers), User Web App, Seller Dashboard, responsive design, English support, GitHub Pages deployment.
+Exclusions: Native apps, advanced integrations, hardware support, formal certifications.
+
+3. User Personas (Defined in personas.md)
+
+Maria Cruz: 35-year-old mother, budget smartphone user, seeks easy sustainable shopping.
+Carlo Reyes: 28-year-old seller, crafts artisan, needs simple order management.
+
+4. Requirements (Defined in requirements.md)
+
+Functional: Browse listings, track orders, manage products, notifications, analytics, login, payments.
+Non-Functional: Usability, performance on low-bandwidth, accessibility, security, maintainability.
+
+5. Use Cases (Defined in use-cases.md)
+
+User tracks order, seller adds product, seller views notifications.
+
+6. User Stories (Defined in user-stories.md)
+
+Simple browsing for buyers, fast loading, mobile-friendly, easy product addition for sellers, secure payments, accessibility.
+
+7. Design Guidelines (Defined in design-guidelines.md)
+
+Typography: Inter (headings), Open Sans (body), min 16px, high contrast.
+Color Palette: #A6D017 (green), #FF8463 (orange), #FEFCEF (cream), #3B3D32 (gray).
+UI Elements: Large buttons, simple icons, minimal clutter.
+Accessibility: WCAG compliance.
+Responsive: Mobile-first with Flexbox.
+
+8. Wireframes (Defined in wireframes.md)
+
+Simplicity, mobile-first, clear CTAs, collapsible sidebar, Figma reference.
+
+9. Roadmap (Defined in roadmap.md)
+
+Phase 1: Planning & Initial Development (April 29–May 5, 2025): Finalize plan, extract assets.
+Phase 2: User Web App Development (May 6–May 15, 2025): Build listings, tracking.
+Phase 3: Seller Dashboard & Deployment (May 16–May 25, 2025): Dashboard, deployment.
+Ongoing: Add features, gather feedback.
+
+10. Stakeholders (Defined in stakeholders.md)
+
+Target users, project team, instructors, partners, educational institutions.
+
+11. Moodboard (Defined in moodboard.md)
+
+Earthy tones, organic textures, sustainable imagery, warm mood.
+
+12. Design Style (Defined in designstyle.md)
+
+Minimalist, grid layouts, subtle animations, consistent styling.
+
+13. Branding (Defined in branding.md)
+
+Leaf/hand logo, “Sustainable Shopping, Local Impact” tagline, eco-friendly values.
+
+14. Common Commands (Defined in common-commands.md)
+
+Navigation (cd, pwd), file management (mkdir, touch, rm), Git (init, add, commit), misc (clear, cat).
+
+15. Project Plan (This Document)
+
+Overview: Guides the development and launch of eTinda, integrating all documents.
+Action: Save as eTinda/docs/project-plan.md.
+
+UI Component Focus
+
+Component: Add New Product form (Seller Dashboard).
+Purpose: Enables sellers to input product details and save drafts.
+Elements: Heading (Inter, 24px, #3B3D32), inputs (Open Sans, 16px), button (#A6D017).
+Responsive: Vertical stack on mobile, title 20px.
+
+Implementation Steps
+
+Export Figma assets to /images.
+Code UI in /public/html/index.html and /public/css/styles.css.
+Test with Live Server and DevTools.
+Document AI usage in ai-log.txt.
+
+
+
