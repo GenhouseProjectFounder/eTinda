@@ -1,37 +1,36 @@
-# Design Guidelines
+Design Guidelines
+Typography
 
-## Typography
-*   **Inter:** Utilize for headings, subheadings, and buttons to ensure legibility and a professional aesthetic.
-*   **Open Sans:** Apply to body text, paragraphs, and captions for a breathable, open appearance.
-*   Ensure high contrast between text and backgrounds (e.g., dark text on light backgrounds) for readability.
-*   Maintain a minimum font size of 16px on mobile devices to enhance accessibility.
+Inter: Headings, subheadings, buttons (legible, professional).
+Open Sans: Body text, paragraphs, captions (breathable, open).
+High contrast (dark on light), min 16px on mobile.
 
-## Color Palette
-Adopt a sustainable, eco-conscious color scheme aligned with eTinda’s brand identity:
-*   `#A6D017` (Green): For primary actions (e.g., buttons, CTAs).
-*   `#FF8463` (Orange): For highlights and alerts (e.g., notifications).
-*   `#FEFCEF` (Cream): For backgrounds to create a clean, natural look.
-*   `#3B3D32` (Dark Gray): For text to ensure contrast and readability.
-*   Ensure all color combinations meet WCAG contrast requirements.
-*   Align with the color specifications provided in the Figma design.
+Color Palette
 
-## UI Elements
-*   Design large, tappable buttons (e.g., “Save as Draft”) with the primary color `#A6D017` for visibility.
-*   Incorporate simple, recognizable icons (e.g., cart, edit) to enhance usability.
-*   Minimize screen clutter by focusing on essential elements and maintaining clean layouts.
+#A6D017 (Green): Primary actions.
+#FF8463 (Orange): Highlights, alerts.
+#FEFCEF (Cream): Backgrounds.
+#3B3D32 (Dark Gray): Text.
+Meet WCAG contrast requirements.
 
-## Accessibility
-*   Adhere to WCAG guidelines, including providing alt text for images and ensuring keyboard navigation support.
-*   Include text descriptions for all visual elements to support screen readers.
+UI Elements
 
-## Language and Tone
-*   Use simple, non-technical language to ensure accessibility for all users.
-*   Maintain a friendly, professional tone that reflects eTinda’s commitment to sustainability and ethical commerce.
+Large, tappable buttons (#A6D017).
+Simple icons (e.g., cart, edit).
+Minimal clutter, clean layouts.
 
-## Responsive (Mobile)
-*   Responsive mobile design to ensure usability on small screens.
-*   Implement responsive layouts using Flexbox and media queries to support desktop, tablet, and mobile devices.
+Accessibility
 
-## Simplicity
-*   Design interfaces that are clean and intuitive to reduce cognitive load.
-*   Focus on user-friendly navigation to accommodate users with limited digital literacy.
+WCAG compliance (alt text, keyboard navigation).
+Text descriptions for visuals.
+
+Language and Tone
+
+Simple, non-technical language.
+Friendly, professional tone.
+
+Responsive (Mobile)
+
+Mobile-first with Flexbox and media queries.
+Clean, intuitive navigation.
+
