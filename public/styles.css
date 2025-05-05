@@ -366,9 +366,6 @@ h2 {
 
 
 /* Product Grid Section */
-.products .container {
-  /* Inherits styles */
-}
 
 .product-grid {
   display: grid;
@@ -736,9 +733,6 @@ background: #1A3C00;
 }
 
 /* Signup Section */
-.signup-section .container {
-  /* Inherits styles */
-}
 
 .signup-cards {
   display: grid;
