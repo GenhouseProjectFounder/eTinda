@@ -333,7 +333,7 @@ h2 {
 }
 
 .about-image {
-  flex: 1 1 400px; /* Allow growth, shrink, base width */
+  flex: 1 1 400px;
   text-align: center;
 }
 .about-image img {
@@ -874,7 +874,7 @@ footer p {
        justify-content: flex-start;
        padding: 0 10%; /* Consistent horizontal padding, handled by slide-content */
    }
-   .hero-slide .slide-content { /* Apply to all slide contents on larger screens */
+   .hero-slide .slide-content {
        text-align: left;
        max-width: 550px; /* Adjusted max width */
        padding: 50px; /* More padding */
