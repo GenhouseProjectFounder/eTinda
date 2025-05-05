@@ -1,31 +1,49 @@
-# Requirements
+Requirements
+4.1 Functional Requirements
 
-## 4.1 Functional Requirements
-### User Web App:
-*   **FR01:** The system shall enable users to browse eco-friendly product listings, displaying images, titles, and prices for each item.
-*   **FR02:** The system shall provide order tracking functionality with a visual timeline and estimated delivery dates.
-*   **FR03:** The system shall allow users to save products to favorites and earn ePoints for rewards.
-*   **FR04:** The system shall support user ratings and reviews for purchased products.
-*   **FR05:** The system shall facilitate in-app messaging between users and sellers.
-### Seller Dashboard:
-*   **FR06:** The system shall allow sellers to add, edit, or deactivate products through a form, organized into tabs (Active, Inactive, Drafts).
-*   **FR07:** The system shall enable sellers to view and update order statuses, including bulk entry of tracking numbers and invoice generation.
-*   **FR08:** The system shall provide sellers with categorized notifications (All, Product, Order, Promos & Alerts) with a “Show Details” option.
-*   **FR09:** The system shall offer basic sales analytics, including revenue and top-performing products.
-### General:
-*   **FR10:** The system shall support user authentication with third-party login options for accessibility.
-*   **FR11:** The system shall provide secure payment options with in-app receipt generation.
+User Web App
+FR01: Browse eco-friendly product listings with images, titles, prices.
+FR02: Provide order tracking with visual timeline and delivery dates.
+FR03: Allow saving favorites and earning ePoints.
+FR04: Support ratings and reviews.
+FR05: Facilitate in-app messaging.
 
-## 4.2 Non-Functional Requirements
-### Usability:
-*   **NFR01:** The platform shall be intuitive for users with limited digital literacy, ensuring ease of navigation.
-*   **NFR02:** Key actions (e.g., adding a product, tracking an order) shall require minimal steps to complete.
-### Performance:
-*   **NFR03:** Pages shall load efficiently on low-bandwidth connections to support users in remote areas.
-*   **NFR04:** The platform shall function seamlessly on basic smartphones through responsive design.
-### Accessibility:
-*   **NFR05:** The platform shall adhere to WCAG guidelines, including alt text for images and keyboard navigation support.
-### Security:
-*   **NFR06:** User data shall be stored securely to protect privacy and ensure trust.
-### Maintainability:
-*   **NFR07:** Code shall be modular and well-documented to facilitate future updates and maintenance.
+
+Seller Dashboard
+FR06: Manage products with tabs (Active, Inactive, Drafts).
+FR07: Update order statuses, bulk tracking, invoice generation.
+FR08: Provide categorized notifications with “Show Details”.
+FR09: Offer basic sales analytics.
+
+
+General
+FR10: Support third-party login.
+FR11: Provide secure payments with receipts.
+
+
+
+4.2 Non-Functional Requirements
+
+Usability
+NFR01: Intuitive for limited digital literacy.
+NFR02: Minimal steps for key actions.
+
+
+Performance
+NFR03: Efficient loading on low-bandwidth.
+NFR04: Seamless on basic smartphones.
+
+
+Accessibility
+NFR05: Adhere to WCAG guidelines.
+
+
+Security
+NFR06: Secure user data storage.
+
+
+Maintainability
+NFR07: Modular, well-documented code.
+
+
+

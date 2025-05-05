@@ -1,0 +1,1 @@
+Empower Communities, Shop Sustainably eTinda connects eco-conscious shoppers with Filipino artisans, offering a marketplace for organic products while supporting ethical commerce. Struggling to find sustainable products or sell your crafts online? eTinda makes it easy. Shop Now | Sell with Us

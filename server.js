@@ -1,31 +1,17 @@
-import { serve } from 'bun';
+const express = require('express');
+const path = require('path');
+const app = express();
+const port = 3000;
 
-serve({
-  port: 3002,
-  async fetch(req) {
-    const url = new URL(req.url);
-    let path = url.pathname;
+// Serve static files from the 'public' directory
+app.use(express.static(path.join(__dirname, 'public')));
 
-    if (path === '/') {
-      path = '/index.html';
-    }
+// Serve index.html for the root route
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/html/index.html'));
+});
 
-    let filePath = path.startsWith('/public') ? path.slice(7) : path;
-    filePath = `public${filePath}`;
-
-    try {
-      const file = Bun.file(filePath);
-      if (!(await file.exists())) {
-        return new Response('File not found', { status: 404 });
-      }
-      const content = await file.text();
-      let contentType = 'text/html';
-      if (filePath.endsWith('.css')) contentType = 'text/css';
-      return new Response(content, {
-        headers: { 'Content-Type': contentType },
-      });
-    } catch (e) {
-      return new Response('File not found', { status: 404 });
-    }
-  },
+// Start the server
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
 });
