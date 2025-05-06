@@ -2,7 +2,8 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const port = 3000;
+const port = parseInt(Bun.env.PORT) || 3000;
+const JWT_SECRET = Bun.env.JWT_SECRET || 'your-secret-key';
 
 const server = http.createServer((req, res) => {
   let filePath = path.join(__dirname, 'public', req.url);

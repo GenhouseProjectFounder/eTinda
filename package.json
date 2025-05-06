@@ -1,0 +1,10 @@
+{
+  "name": "eTinda",
+  "version": "1.0.0",
+  "dependencies": {
+    "better-sqlite3": "^9.5.0"
+  },
+  "scripts": {
+    "start": "bun run server.js"
+  }
+}
