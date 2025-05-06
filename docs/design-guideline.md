@@ -1,4 +1,4 @@
-Design Guidelines
+Design Guideline
 Typography
 
 Inter: Headings, subheadings, buttons (legible, professional).

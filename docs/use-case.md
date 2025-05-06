@@ -1,4 +1,4 @@
-Use Cases
+Use Case
 
 Example 1: User Tracks an Order
 User navigates to order tracking section.

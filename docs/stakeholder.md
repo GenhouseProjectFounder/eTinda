@@ -1,4 +1,4 @@
-Stakeholders
+Stakeholder
 - **Target Users**: Eco-conscious buyers, small business sellers.
 - **Project Team**: Student developer, classmates for review.
 - **Instructors**: Academic evaluators.

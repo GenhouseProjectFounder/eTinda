@@ -1,4 +1,4 @@
-User Personas
+User Persona
 3.1 Maria Cruz
 
 Background: 35-year-old mother, part-time worker in Quezon City, uses a budget smartphone for social media, limited online shopping experience.

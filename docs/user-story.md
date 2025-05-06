@@ -1,4 +1,4 @@
-User Stories
+User Story
 
 As an eco-conscious buyer with limited tech skills, I want a simple interface to browse sustainable products, so I can shop with ease.
 As a buyer with slow internet, I want fast-loading pages, so I can shop without delays.

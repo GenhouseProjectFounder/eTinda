@@ -1,4 +1,4 @@
-Wireframes
+Wireframe
 Key Considerations
 
 Simplicity: Clean layouts for easy navigation.
