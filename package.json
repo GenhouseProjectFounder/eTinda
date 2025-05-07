@@ -6,5 +6,6 @@
   },
   "scripts": {
     "start": "bun run server.js"
-  }
+  },
+  "type": "module"
 }
