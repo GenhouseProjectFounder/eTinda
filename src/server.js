@@ -2,25 +2,13 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { Database } from 'bun:sqlite';
+import { getService, createService, updateService, deleteService } from '../db/db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const port = parseInt(process.env.PORT) || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
-
-// Initialize SQLite database
-const db = new Database('db/database.sqlite');
-db.run(`
-  CREATE TABLE IF NOT EXISTS service (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    service_provider_id INTEGER,
-    name TEXT,
-    description TEXT,
-    price REAL
-  )
-`);
 
 console.log('Starting server...');
 try {
@@ -44,46 +32,23 @@ try {
         req.on('end', () => {
           try {
             const { service_provider_id, name, description, price } = JSON.parse(body);
-            db.run(
-              `INSERT INTO service (service_provider_id, name, description, price) VALUES (?, ?, ?, ?)`,
-              [service_provider_id, name, description, price],
-              function (err) {
-                if (err) {
-                  res.writeHead(500, { 'Content-Type': 'application/json' });
-                  res.end(JSON.stringify({ message: err.message }));
-                  return;
-                }
-                db.get(`SELECT * FROM service WHERE id = ?`, [this.lastID], (err, row) => {
-                  if (err) {
-                    res.writeHead(500, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ message: err.message }));
-                    return;
-                  }
-                  res.writeHead(201, { 'Content-Type': 'application/json' });
-                  res.end(JSON.stringify(row));
-                });
-              }
-            );
+            const newService = createService(service_provider_id, name, description, price);
+            res.writeHead(201, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(newService));
           } catch (error) {
             res.writeHead(400, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Invalid JSON' }));
           }
         });
       } else if (req.method === 'GET' && serviceId) {
-        db.get(`SELECT * FROM service WHERE id = ?`, [serviceId], (err, row) => {
-          if (err) {
-            res.writeHead(500, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: err.message }));
-            return;
-          }
-          if (!row) {
-            res.writeHead(404, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Service not found' }));
-            return;
-          }
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify(row));
-        });
+        const service = getService(serviceId);
+        if (!service) {
+          res.writeHead(404, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ message: 'Service not found' }));
+          return;
+        }
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify(service));
       } else if (req.method === 'PUT' && serviceId) {
         let body = '';
         req.on('data', chunk => {
@@ -92,41 +57,18 @@ try {
         req.on('end', () => {
           try {
             const { service_provider_id, name, description, price } = JSON.parse(body);
-            db.run(
-              `UPDATE service SET service_provider_id = ?, name = ?, description = ?, price = ? WHERE id = ?`,
-              [service_provider_id, name, description, price, serviceId],
-              function (err) {
-                if (err) {
-                  res.writeHead(500, { 'Content-Type': 'application/json' });
-                  res.end(JSON.stringify({ message: err.message }));
-                  return;
-                }
-                db.get(`SELECT * FROM service WHERE id = ?`, [serviceId], (err, row) => {
-                  if (err) {
-                    res.writeHead(500, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify({ message: err.message }));
-                    return;
-                  }
-                  res.writeHead(200, { 'Content-Type': 'application/json' });
-                  res.end(JSON.stringify(row));
-                });
-              }
-            );
+            const updatedService = updateService(serviceId, service_provider_id, name, description, price);
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify(updatedService));
           } catch (error) {
             res.writeHead(400, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ message: 'Invalid JSON' }));
           }
         });
       } else if (req.method === 'DELETE' && serviceId) {
-        db.run(`DELETE FROM service WHERE id = ?`, [serviceId], function (err) {
-          if (err) {
-            res.writeHead(500, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: err.message }));
-            return;
-          }
-          res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ message: 'Service deleted' }));
-        });
+        deleteService(serviceId);
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ message: 'Service deleted' }));
       } else {
         res.writeHead(400, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ message: 'Invalid request' }));
