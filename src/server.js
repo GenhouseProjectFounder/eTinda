@@ -2,7 +2,6 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { getService, createService, updateService, deleteService } from '../db/db.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,59 +19,10 @@ try {
       return;
     }
 
-    // Handle /services endpoints
+    // Services endpoint not implemented
     if (req.url.startsWith('/services')) {
-      const serviceId = req.url.split('/')[2];
-
-      if (req.method === 'POST' && req.url === '/services') {
-        let body = '';
-        req.on('data', chunk => {
-          body += chunk.toString();
-        });
-        req.on('end', () => {
-          try {
-            const { service_provider_id, name, description, price } = JSON.parse(body);
-            const newService = createService(service_provider_id, name, description, price);
-            res.writeHead(201, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(newService));
-          } catch (error) {
-            res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Invalid JSON' }));
-          }
-        });
-      } else if (req.method === 'GET' && serviceId) {
-        const service = getService(serviceId);
-        if (!service) {
-          res.writeHead(404, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ message: 'Service not found' }));
-          return;
-        }
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(service));
-      } else if (req.method === 'PUT' && serviceId) {
-        let body = '';
-        req.on('data', chunk => {
-          body += chunk.toString();
-        });
-        req.on('end', () => {
-          try {
-            const { service_provider_id, name, description, price } = JSON.parse(body);
-            const updatedService = updateService(serviceId, service_provider_id, name, description, price);
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify(updatedService));
-          } catch (error) {
-            res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Invalid JSON' }));
-          }
-        });
-      } else if (req.method === 'DELETE' && serviceId) {
-        deleteService(serviceId);
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Service deleted' }));
-      } else {
-        res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: 'Invalid request' }));
-      }
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ message: 'Services endpoint not implemented' }));
       return;
     }
 
