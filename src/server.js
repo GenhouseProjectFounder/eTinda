@@ -2,7 +2,7 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { Database } from 'bun/sqlite';
+import { Database } from 'bun:sqlite';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -135,9 +135,9 @@ try {
     }
 
     // Serve static files
-    let filePath = path.join(__dirname, 'public', req.url);
-    if (filePath === path.join(__dirname, 'public', '/')) {
-      filePath = path.join(__dirname, 'public', 'index.html');
+    let filePath = path.join(__dirname, '..', 'public', req.url);
+    if (filePath === path.join(__dirname, '..', 'public', '/')) {
+      filePath = path.join(__dirname, '..', 'public', 'index.html');
     }
 
     const extname = String(path.extname(filePath)).toLowerCase();
@@ -156,9 +156,15 @@ try {
     fs.readFile(filePath, (error, content) => {
       if (error) {
         if (error.code === 'ENOENT') {
-          fs.readFile(path.join(__dirname, '404.html'), (error, content) => {
+          // Assuming 404.html would be in the public directory as well
+          fs.readFile(path.join(__dirname, '..', 'public', '404.html'), (err, errorPageContent) => {
+            if (err) { // If 404.html is also not found, send a generic 404
+                res.writeHead(404, { 'Content-Type': 'text/plain' });
+                res.end('404 Not Found');
+                return;
+            }
             res.writeHead(404, { 'Content-Type': 'text/html' });
-            res.end(content, 'utf-8');
+            res.end(errorPageContent, 'utf-8');
           });
         } else {
           res.writeHead(500);
