@@ -21,8 +21,9 @@ class User {
     // If database is available, attempt to save
     if (this.db) {
       try {
-        const savedUser = await this.db.insert('users', user);
-        return savedUser;
+        const result = this.db.query('INSERT INTO user (name, email, createdAt) VALUES (?, ?, ?) RETURNING *')
+          .get(user.name, user.email, user.createdAt);
+        return result;
       } catch (error) {
         console.error('Database insert error:', error);
         throw new Error('Failed to create user');
@@ -38,7 +39,8 @@ class User {
     // If database is available, fetch from there
     if (this.db) {
       try {
-        return await this.db.select('users');
+        const users = this.db.query('SELECT * FROM user').all();
+        return users;
       } catch (error) {
         console.error('Database fetch error:', error);
         throw new Error('Failed to retrieve users');
@@ -59,7 +61,8 @@ class User {
     // If database is available, fetch from there
     if (this.db) {
       try {
-        return await this.db.findById('users', userId);
+        const user = this.db.query('SELECT * FROM user WHERE id = ?').get(userId);
+        return user || null;
       } catch (error) {
         console.error('Database find error:', error);
         throw new Error('Failed to find user');
@@ -85,7 +88,18 @@ class User {
     // If database is available, update in database
     if (this.db) {
       try {
-        return await this.db.update('users', userId, sanitizedUpdate);
+        const updateKeys = Object.keys(sanitizedUpdate);
+        if (updateKeys.length > 0) {
+          const updateQuery = updateKeys.map(key => `${key} = ?`).join(', ');
+          const query = `UPDATE user SET ${updateQuery} WHERE id = ? RETURNING *`;
+          const params = [...updateKeys.map(key => sanitizedUpdate[key]), userId];
+          
+          const updatedUser = this.db.query(query).get(...params);
+          return updatedUser;
+        }
+        
+        // If no updates, return the existing user
+        return await this.findUserById(userId);
       } catch (error) {
         console.error('Database update error:', error);
         throw new Error('Failed to update user');
@@ -115,7 +129,8 @@ class User {
     // If database is available, delete from database
     if (this.db) {
       try {
-        return await this.db.delete('users', userId);
+        const deletedUser = this.db.query('DELETE FROM user WHERE id = ? RETURNING *').get(userId);
+        return deletedUser || { id: userId };
       } catch (error) {
         console.error('Database delete error:', error);
         throw new Error('Failed to delete user');
@@ -242,7 +257,8 @@ class User {
   async handlePatch(req, res) {
     try {
       // Extract user ID from request
-      const userId = req.params && req.params.id ? Number(req.params.id) : null;
+      const urlParts = req.url.split('/');
+      const userId = urlParts.length > 2 ? Number(urlParts[2]) : null;
 
       // Validate user ID
       if (!userId) {
@@ -316,7 +332,8 @@ class User {
   async handleDelete(req, res) {
     try {
       // Extract user ID from request
-      const userId = req.params && req.params.id ? Number(req.params.id) : null;
+      const urlParts = req.url.split('/');
+      const userId = urlParts.length > 2 ? Number(urlParts[2]) : null;
 
       // Validate user ID
       if (!userId) {

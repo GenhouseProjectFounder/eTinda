@@ -2,6 +2,8 @@ import http from 'http';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { Database } from 'bun:sqlite';
+import User from './resources/user.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,23 +13,33 @@ const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 console.log('Starting server...');
 try {
+  // Initialize database connection
+  const db = new Database('eTinda.sqlite', { create: true });
+  const userResource = new User(db);
+
   const server = http.createServer((req, res) => {
-    // Handle GET /user
-    if (req.method === 'GET' && req.url === '/user') {
-      res.writeHead(200, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'User endpoint hit', user: { id: 1, username: 'testuser' } }));
+    const { method, url } = req;
+
+    // Handle user routes
+    if (method === 'GET' && url.startsWith('/user')) {
+      const urlParts = url.split('/');
+      const userId = urlParts.length > 2 ? urlParts[2] : null;
+
+      // Modify req object to pass ID to handleGet method
+      req.params = { id: userId };
+      userResource.handleGet(req, res);
       return;
     }
 
     // Services endpoint not implemented
-    if (req.url.startsWith('/services')) {
+    if (url.startsWith('/services')) {
       res.writeHead(404, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Services endpoint not implemented' }));
       return;
     }
 
     // Serve static files
-    let filePath = path.join(__dirname, '..', 'public', req.url);
+    let filePath = path.join(__dirname, '..', 'public', url);
     if (filePath === path.join(__dirname, '..', 'public', '/')) {
       filePath = path.join(__dirname, '..', 'public', 'index.html');
     }
