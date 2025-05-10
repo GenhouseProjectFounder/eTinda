@@ -1,9 +1,20 @@
 {
-  "name": "etinda",
+  "name": "eTinda",
   "version": "1.0.0",
+  "description": "Fair trade marketplace",
+  "type": "module",
+  "engines": {
+    "bun": ">=1.0.0"
+  },
   "scripts": {
-    "dev": "cd /home/ewdmin-meg/zero2dev/eTinda && bun src/server.js"
+    "dev": "cd /home/ewdmin-meg/zero2dev/eTinda && bun src/server.js",
+    "test": "bun test"
   },
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "bun-types": "latest"
+  },
+  "peerDependencies": {
+    "bun": ">=1.0.0"
+  }
 }
