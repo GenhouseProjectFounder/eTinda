@@ -1,9 +1,0 @@
-{
-  "name": "etinda",
-  "version": "1.0.0",
-  "scripts": {
-    "dev": "cd /home/ewdmin-meg/zero2dev/eTinda && bun src/server.js"
-  },
-  "dependencies": {},
-  "devDependencies": {}
-}
