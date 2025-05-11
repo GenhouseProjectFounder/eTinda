@@ -71,9 +71,9 @@ db.exec(`CREATE TABLE product (
   last_updated TEXT
 );`);
 
-// Order Master table - contains overall order information
-db.exec('DROP TABLE IF EXISTS order_master;');
-db.exec(`CREATE TABLE order_master (
+// Order table - contains overall order information
+db.exec('DROP TABLE IF EXISTS "order";');
+db.exec(`CREATE TABLE "order" (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   userId INTEGER NOT NULL REFERENCES user(id),
   orderDate TEXT NOT NULL,
@@ -94,7 +94,7 @@ db.exec(`CREATE TABLE order_master (
 db.exec('DROP TABLE IF EXISTS order_detail;');
 db.exec(`CREATE TABLE order_detail (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  orderId INTEGER NOT NULL REFERENCES order_master(id),
+  orderId INTEGER NOT NULL REFERENCES "order"(id),
   productId INTEGER NOT NULL REFERENCES product(id),
   quantity INTEGER NOT NULL,
   unit_price REAL NOT NULL,
@@ -102,7 +102,6 @@ db.exec(`CREATE TABLE order_detail (
   status TEXT CHECK(status IN ('pending', 'shipped', 'delivered', 'returned')),
   product_snapshot TEXT
 );`);
-
 
 // Notification table with more detailed categorization
 db.exec('DROP TABLE IF EXISTS notification;');
@@ -114,10 +113,9 @@ db.exec(`CREATE TABLE notification (
   type TEXT NOT NULL CHECK(type IN ('product', 'order', 'promo', 'system', 'low_stock', 'sale')),
   is_read BOOLEAN DEFAULT 0,
   action_url TEXT,
-  orderId INTEGER REFERENCES order_master(id),
+  orderId INTEGER REFERENCES "order"(id),
   productId INTEGER REFERENCES product(id),
   severity TEXT CHECK(severity IN ('low', 'medium', 'high'))
 );`);
-
 
 export default db;

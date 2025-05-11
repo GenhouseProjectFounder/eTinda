@@ -7,7 +7,7 @@
     "bun": ">=1.0.0"
   },
   "scripts": {
-    "dev": "cd /home/ewdmin-meg/zero2dev/eTinda && bun src/server.js",
+    "dev": "bun src/server.js",
     "test": "bun test"
   },
   "dependencies": {},

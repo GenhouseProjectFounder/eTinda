@@ -2,31 +2,57 @@ class User {
   constructor(db) {
     this.db = db; // Optional database connection
     this.users = []; // In-memory storage as fallback
+    console.log('User resource initialized with database:', !!db);
   }
 
-  // Existing CRUD methods remain the same, with slight modifications for type safety
+  // CRUD methods updated to match database schema
   async createUser(userData) {
     // Input validation
-    if (!userData.name || !userData.email) {
-      throw new Error('Name and email are required');
+    if (!userData.username || !userData.email) {
+      throw new Error('Username and email are required');
     }
 
     const user = {
-      id: this.users.length + 1, // Simple ID generation
-      name: String(userData.name),
+      username: String(userData.username),
       email: String(userData.email),
-      createdAt: new Date().toISOString()
+      full_name: userData.full_name || '',
+      role: userData.role || 'guest',
+      account_created: new Date().toISOString().split('T')[0],
+      password: userData.password || '', // Add password handling
+      location: userData.location || '',
+      phone_number: userData.phone_number || '',
+      digital_literacy_level: userData.digital_literacy_level || 'beginner'
     };
 
     // If database is available, attempt to save
     if (this.db) {
       try {
-        const result = this.db.query('INSERT INTO user (name, email, createdAt) VALUES (?, ?, ?) RETURNING *')
-          .get(user.name, user.email, user.createdAt);
+        console.log('Attempting to create user:', user);
+        const query = `
+          INSERT INTO user 
+          (username, email, full_name, role, account_created, 
+           password, location, phone_number, digital_literacy_level) 
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) 
+          RETURNING *
+        `;
+        const result = this.db.prepare(query).get(
+          user.username, 
+          user.email, 
+          user.full_name, 
+          user.role, 
+          user.account_created,
+          user.password,
+          user.location,
+          user.phone_number,
+          user.digital_literacy_level
+        );
+        
+        console.log('User created in database:', result);
         return result;
       } catch (error) {
         console.error('Database insert error:', error);
-        throw new Error('Failed to create user');
+        console.error('Error details:', error.message, error.stack);
+        throw new Error('Failed to create user: ' + error.message);
       }
     }
 
@@ -39,11 +65,25 @@ class User {
     // If database is available, fetch from there
     if (this.db) {
       try {
-        const users = this.db.query('SELECT * FROM user').all();
-        return users;
+        console.log('Attempting to fetch all users from database');
+        
+        // Verify database connection
+        if (!this.db.prepare) {
+          console.error('Database prepare method not available');
+          throw new Error('Invalid database connection');
+        }
+
+        const query = this.db.prepare('SELECT * FROM user');
+        const users = query.all();
+        
+        console.log('Users fetched:', users);
+        console.log('Number of users:', users ? users.length : 0);
+        
+        return users || [];
       } catch (error) {
         console.error('Database fetch error:', error);
-        throw new Error('Failed to retrieve users');
+        console.error('Error details:', error.message, error.stack);
+        throw new Error('Failed to retrieve users: ' + error.message);
       }
     }
 
@@ -58,14 +98,32 @@ class User {
       throw new Error('Invalid User ID');
     }
 
+    console.log(`Attempting to find user with ID: ${userId}`);
+
     // If database is available, fetch from there
     if (this.db) {
       try {
-        const user = this.db.query('SELECT * FROM user WHERE id = ?').get(userId);
-        return user || null;
+        // Verify database connection
+        if (!this.db.prepare) {
+          console.error('Database prepare method not available');
+          throw new Error('Invalid database connection');
+        }
+
+        const query = this.db.prepare('SELECT * FROM user WHERE id = ?');
+        const user = query.get(userId);
+        
+        console.log('User found:', user);
+        
+        if (!user) {
+          console.log(`No user found with ID: ${userId}`);
+          return null;
+        }
+        
+        return user;
       } catch (error) {
         console.error('Database find error:', error);
-        throw new Error('Failed to find user');
+        console.error('Error details:', error.message, error.stack);
+        throw new Error('Failed to find user: ' + error.message);
       }
     }
 
@@ -82,8 +140,13 @@ class User {
 
     // Sanitize update data
     const sanitizedUpdate = {};
-    if (updatedInfo.name) sanitizedUpdate.name = String(updatedInfo.name);
+    if (updatedInfo.username) sanitizedUpdate.username = String(updatedInfo.username);
     if (updatedInfo.email) sanitizedUpdate.email = String(updatedInfo.email);
+    if (updatedInfo.full_name) sanitizedUpdate.full_name = String(updatedInfo.full_name);
+    if (updatedInfo.role) sanitizedUpdate.role = String(updatedInfo.role);
+    if (updatedInfo.location) sanitizedUpdate.location = String(updatedInfo.location);
+    if (updatedInfo.phone_number) sanitizedUpdate.phone_number = String(updatedInfo.phone_number);
+    if (updatedInfo.digital_literacy_level) sanitizedUpdate.digital_literacy_level = String(updatedInfo.digital_literacy_level);
 
     // If database is available, update in database
     if (this.db) {
@@ -94,7 +157,7 @@ class User {
           const query = `UPDATE user SET ${updateQuery} WHERE id = ? RETURNING *`;
           const params = [...updateKeys.map(key => sanitizedUpdate[key]), userId];
           
-          const updatedUser = this.db.query(query).get(...params);
+          const updatedUser = this.db.prepare(query).get(...params);
           return updatedUser;
         }
         
@@ -102,7 +165,7 @@ class User {
         return await this.findUserById(userId);
       } catch (error) {
         console.error('Database update error:', error);
-        throw new Error('Failed to update user');
+        throw new Error('Failed to update user: ' + error.message);
       }
     }
 
@@ -129,11 +192,11 @@ class User {
     // If database is available, delete from database
     if (this.db) {
       try {
-        const deletedUser = this.db.query('DELETE FROM user WHERE id = ? RETURNING *').get(userId);
+        const deletedUser = this.db.prepare('DELETE FROM user WHERE id = ? RETURNING *').get(userId);
         return deletedUser || { id: userId };
       } catch (error) {
         console.error('Database delete error:', error);
-        throw new Error('Failed to delete user');
+        throw new Error('Failed to delete user: ' + error.message);
       }
     }
 
@@ -146,15 +209,12 @@ class User {
   }
 
   // HTTP Handler Methods
-  /**
-   * Handle GET request for users
-   * @param {Object} req - HTTP request object
-   * @param {Object} res - HTTP response object
-   */
   async handleGet(req, res) {
     try {
       // Check if specific user ID is requested
       const userId = req.params && req.params.id ? Number(req.params.id) : null;
+
+      console.log(`Handling GET request for user ID: ${userId || 'all users'}`);
 
       let users;
       if (userId) {
@@ -163,6 +223,7 @@ class User {
         
         // If no user found, return 404
         if (!users) {
+          console.log(`No user found with ID: ${userId}`);
           res.writeHead(404, { 'Content-Type': 'application/json' });
           return res.end(JSON.stringify({ 
             error: 'User not found',
@@ -172,6 +233,7 @@ class User {
       } else {
         // Fetch all users
         users = await this.getAllUsers();
+        console.log(`Fetched ${users.length} users`);
       }
 
       // Successful response
@@ -192,11 +254,6 @@ class User {
     }
   }
 
-  /**
-   * Handle POST request to create a user
-   * @param {Object} req - HTTP request object
-   * @param {Object} res - HTTP response object
-   */
   async handlePost(req, res) {
     try {
       // Collect request body
@@ -210,10 +267,10 @@ class User {
           const userData = JSON.parse(body);
 
           // Validate required fields
-          if (!userData.name || !userData.email) {
+          if (!userData.username || !userData.email) {
             res.writeHead(400, { 'Content-Type': 'application/json' });
             return res.end(JSON.stringify({ 
-              error: 'Name and email are required',
+              error: 'Username and email are required',
               status: 400 
             }));
           }
@@ -249,11 +306,6 @@ class User {
     }
   }
 
-  /**
-   * Handle PATCH request to update a user
-   * @param {Object} req - HTTP request object
-   * @param {Object} res - HTTP response object
-   */
   async handlePatch(req, res) {
     try {
       // Extract user ID from request
@@ -324,11 +376,6 @@ class User {
     }
   }
 
-  /**
-   * Handle DELETE request to remove a user
-   * @param {Object} req - HTTP request object
-   * @param {Object} res - HTTP response object
-   */
   async handleDelete(req, res) {
     try {
       // Extract user ID from request
