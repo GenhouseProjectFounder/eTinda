@@ -126,7 +126,7 @@ Bun.serve({
     // Serve static files
     let filePath = path.join(__dirname, '..', 'public', url.pathname);
     if (url.pathname === '/') {
-      filePath = path.join(__dirname, '..', 'public', 'index.html');
+      filePath = path.join(__dirname, '..', 'public', 'html', 'index.html');
     }
 
     try {
