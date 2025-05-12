@@ -1,17 +1,19 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="eTinda - Shop sustainably and support Filipino artisans with eco-friendly products.">
   <title>eTinda - Sustainable Shopping in the Philippines</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Open+Sans:wght@400&display=swap">
   <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>
   <header>
     <nav class="navbar" role="navigation">
       <div class="logo" aria-label="eTinda Logo">eTinda</div>
+      <div class="search-bar">
+        <input type="text" id="search" placeholder="Search products or artisans..." aria-label="Search products or artisans">
+        <button onclick="searchProducts()" aria-label="Search">Search</button>
+      </div>
       <ul class="nav-links" role="menubar">
         <li role="menuitem"><a href="#home">Home</a></li>
         <li role="menuitem"><a href="#about">About</a></li>
@@ -21,23 +23,24 @@
         <li role="menuitem"><a href="#contact">Contact</a></li>
         <li role="menuitem" class="login-link"><a href="#login" class="cta-button login-button" aria-label="Login">Login</a></li>
       </ul>
-      <div class="menu-toggle" aria-label="Toggle Menu">☰</div>
+      <div class="menu-toggle" aria-label="Toggle Menu" role="button" aria-expanded="false">☰</div>
     </nav>
   </header>
 
+
   <main>
+    <!-- 1. Hero/Home -->
     <section id="home" class="hero-carousel section-cream" role="banner">
       <div class="carousel-container" aria-live="polite">
-        <div class="carousel-item hero-slide slide-image active">
+        <div class="carousel-item hero-slide slide-image active" aria-current="true">
           <div class="slide-content">
             <h1>Support Local, Shop Sustainable</h1>
             <p>Discover unique, handcrafted eco-friendly products directly from talented Filipino artisans. Every purchase empowers communities and protects our planet.</p>
             <div class="cta-buttons" role="group">
-              <a href="#join-us" class="cta-button primary" aria-label="Sign up as User">Sign Up Now</a>
+              <a href="#products" class="cta-button primary large" aria-label="Sign up as a buyer to explore shops">Sign Up Now</a>
             </div>
-            <a href="#join-us" class="cta-link secondary" aria-label="Join as Seller">Want to Sell with Us?</a>
           </div>
-          <img src="../../images/hero-placeholder-1.jpg" alt="Handcrafted goods" aria-hidden="true">
+          <img src="../../images/hero-handcrafted-goods.jpg" alt="Handcrafted goods made by Filipino artisans" aria-hidden="true">
         </div>
         <div class="carousel-item hero-slide slide-video">
           <div class="slide-content">
@@ -49,26 +52,57 @@
             Your browser does not support the video tag.
           </video>
         </div>
+        <div class="carousel-item hero-slide slide-artisan" aria-current="false">
+          <div class="slide-content">
+            <h2>Meet Our Artisans</h2>
+            <p>Celebrate the skilled hands behind every product. Your support helps preserve their traditions.</p>
+            <a href="#sellers" class="cta-link small" aria-label="Learn about selling with eTinda">Want to Sell with Us?</a>
+          </div>
+          <img src="../../images/hero-artisan-working.jpg" alt="Artisan working on a sustainable product" aria-hidden="true">
+        </div>
         <div class="carousel-item hero-slide slide-about">
           <div class="slide-content">
             <h2>Our Mission: Empowering Artisans, Sustaining Earth</h2>
             <p>eTinda is more than just a marketplace. We're a community dedicated to promoting fair trade practices, ensuring artisans receive fair wages and work in safe conditions. By choosing eTinda, you contribute directly to sustainable livelihoods and cultural preservation across the Philippines.</p>
             <a href="#about" class="cta-link primary-outline" aria-label="Learn more about our mission">Learn More</a>
           </div>
-          <img src="../../images/hero-placeholder-2.jpg" alt="Artisan working" aria-hidden="true">
+          <img src="../../images/hero-artisan-working.jpg" alt="Artisan working on a sustainable product" aria-hidden="true">
         </div>
+      </div>
+      <div class="carousel-indicators" role="tablist">
+        <button class="indicator active" aria-label="Go to slide 1" aria-selected="true" role="tab"></button>
+        <button class="indicator" aria-label="Go to slide 2" aria-selected="false" role="tab"></button>
+        <button class="indicator" aria-label="Go to slide 3" aria-selected="false" role="tab"></button>
+        <button class="indicator" aria-label="Go to slide 4" aria-selected="false" role="tab"></button>
       </div>
       <button class="carousel-prev hero-prev" aria-label="Previous Slide">❮</button>
       <button class="carousel-next hero-next" aria-label="Next Slide">❯</button>
     </section>
 
+
+    <!-- 2. Search Functionality (Search Bar) -->
+    <section id="search-functionality" class="section-cream" role="region" aria-label="Search Products and Artisans">
+      <div class="container">
+        <h2>Find Your Sustainable Treasures</h2>
+        <p>Explore a diverse range of artisan-crafted goods with ease—start your journey here!</p>
+        <div class="search-bar-container">
+          <input type="text" id="search-main" placeholder="Search products or artisans..." aria-label="Search products or artisans" oninput="searchProducts()">
+          <button onclick="searchProducts()" aria-label="Search">Search Now</button>
+        </div>
+        <p class="search-feedback" id="search-feedback" role="alert"></p>
+        <div class="search-results" id="search-results" aria-live="polite"></div>
+      </div>
+    </section>
+
+
+    <!-- 3. About -->
     <section id="about" class="section-lime" role="region" aria-label="About eTinda and Fair Trade">
       <div class="container">
         <h2>About eTinda</h2>
         <p class="section-description">Learn how eTinda makes a difference.</p>
         <div class="about-content">
           <div class="about-image">
-            <img src="../../images/about-placeholder.jpg" alt="Community Impact">
+            <img src="../../images/about-community-impact.jpg" alt="Community impact of eTinda artisans">
           </div>
           <div class="about-text">
             <h3>Fair Trade Matters</h3>
@@ -81,13 +115,31 @@
       </div>
     </section>
 
+
+    <!-- 4. Product Categories/Filters -->
+    <section id="filters" role="region" aria-label="Product Filters">
+      <div class="container">
+        <h2>Refine Your Journey</h2>
+        <p>Filter to find the perfect handmade item for you.</p>
+        <ul>
+          <li><input type="checkbox" id="category-baskets"> <label for="category-baskets">Baskets</label></li>
+          <li><input type="checkbox" id="category-textiles"> <label for="category-textiles">Textiles</label></li>
+          <li><input type="checkbox" id="category-soaps"> <label for="category-soaps">Soaps</label></li>
+          <li><input type="checkbox" id="category-straws"> <label for="category-straws">Straws</label></li>
+          <li><input type="checkbox" id="category-placemats"> <label for="category-placemats">Placemats</label></li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- 5. Products -->
     <section id="products" class="products section-cream" role="region" aria-label="Featured Sustainable Products">
       <div class="container">
         <h2>Featured Sustainable Products</h2>
         <p class="section-description">Handpicked items that showcase the best of Filipino craftsmanship and eco-conscious production.</p>
         <div class="product-grid">
           <div class="product-card">
-            <img src="../../images/product-placeholder-1.jpg" alt="Handwoven Basket">
+            <img src="../../images/product-handwoven-basket.jpg" alt="Handwoven basket from Pampanga">
             <h3>Handwoven Basket</h3>
             <p class="product-price">₱500</p>
             <p class="product-origin">From Pampanga</p>
@@ -98,7 +150,7 @@
             </div>
           </div>
           <div class="product-card">
-            <img src="../../images/product-placeholder-2.jpg" alt="Eco-friendly Textile">
+            <img src="../../images/product-eco-textile.jpg" alt="Eco-friendly textile from Baguio">
             <h3>Eco-friendly Textile</h3>
             <p class="product-price">₱750</p>
             <p class="product-origin">From Baguio</p>
@@ -109,7 +161,7 @@
             </div>
           </div>
           <div class="product-card">
-            <img src="../../images/product-placeholder-3.jpg" alt="Organic Soap">
+            <img src="../../images/product-organic-soap.jpg" alt="Organic soap from Davao">
             <h3>Organic Soap</h3>
             <p class="product-price">₱400</p>
             <p class="product-origin">From Davao</p>
@@ -120,7 +172,7 @@
             </div>
           </div>
           <div class="product-card">
-            <img src="../../images/product-placeholder-4.jpg" alt="Bamboo Straws">
+            <img src="../../images/product-bamboo-straws.jpg" alt="Bamboo straws set from Laguna">
             <h3>Bamboo Straws (Set)</h3>
             <p class="product-price">₱150</p>
             <p class="product-origin">From Laguna</p>
@@ -131,7 +183,7 @@
             </div>
           </div>
           <div class="product-card">
-            <img src="../../images/product-placeholder-5.jpg" alt="Abaca Placemat">
+            <img src="../../images/product-abaca-placemat.jpg" alt="Abaca placemat from Bicol">
             <h3>Abaca Placemat</h3>
             <p class="product-price">₱300</p>
             <p class="product-origin">From Bicol</p>
@@ -142,7 +194,7 @@
             </div>
           </div>
           <div class="product-card">
-            <img src="../../images/product-placeholder-6.jpg" alt="Bayong Bag">
+            <img src="../../images/product-bayong-bag.jpg" alt="Classic bayong bag from Quezon">
             <h3>Classic Bayong Bag</h3>
             <p class="product-price">₱600</p>
             <p class="product-origin">From Quezon</p>
@@ -156,143 +208,452 @@
       </div>
     </section>
 
-    <section id="top-products" class="carousel top-products section-lime" role="region" aria-label="Top Products">
+
+    <!-- 6. Top Products (Community Favorites) -->
+    <section id="top-products" class="products section-cream" role="region" aria-label="Top Products">
       <div class="container">
         <h2>Our Community's Favorites</h2>
         <p class="section-description">The products loved most by eTinda shoppers this month.</p>
-        <div class="carousel-container" aria-live="polite">
-          <div class="carousel-item product-card">
-            <img src="../../images/product-placeholder-7.jpg" alt="Coconut Bowl">
-            <h3>Coconut Bowl</h3>
-            <p class="product-price">₱250</p>
-            <p class="product-origin">From Palawan</p>
-            <div class="product-actions">
-              <a href="#" class="guest-action action-favorite" aria-label="Favorite Coconut Bowl"><i class="far fa-heart"></i> Favorite</a>
-              <a href="#" class="guest-action action-cart" aria-label="Add Coconut Bowl to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-              <a href="#" class="guest-action action-buy" aria-label="Buy Coconut Bowl"><i class="fas fa-credit-card"></i> Buy Now</a>
+        <div class="carousel-container product-carousel" aria-live="polite">
+          <div class="carousel-item product-slide active" aria-current="true">
+            <div class="product-grid">
+              <div class="product-card">
+                <img src="../../images/product-coconut-bowl.jpg" alt="Coconut bowl from Palawan">
+                <h3>Coconut Bowl</h3>
+                <p class="product-price">₱250</p>
+                <p class="product-origin">From Palawan</p>
+                <div class="product-actions">
+                  <a href="#" class="guest-action action-favorite" aria-label="Favorite Coconut Bowl"><i class="far fa-heart"></i> Favorite</a>
+                  <a href="#" class="guest-action action-cart" aria-label="Add Coconut Bowl to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                  <a href="#" class="guest-action action-buy" aria-label="Buy Coconut Bowl"><i class="fas fa-credit-card"></i> Buy Now</a>
+                </div>
+              </div>
+              <div class="product-card">
+                <img src="../../images/product-beeswax-wraps.jpg" alt="Beeswax wraps set from Benguet">
+                <h3>Beeswax Wraps (Set)</h3>
+                <p class="product-price">₱350</p>
+                <p class="product-origin">From Benguet</p>
+                <div class="product-actions">
+                  <a href="#" class="guest-action action-favorite" aria-label="Favorite Beeswax Wraps"><i class="far fa-heart"></i> Favorite</a>
+                  <a href="#" class="guest-action action-cart" aria-label="Add Beeswax Wraps to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                  <a href="#" class="guest-action action-buy" aria-label="Buy Beeswax Wraps"><i class="fas fa-credit-card"></i> Buy Now</a>
+                </div>
+              </div>
+              <div class="product-card">
+                <img src="../../images/product-handmade-journal.jpg" alt="Handmade paper journal from Cebu">
+                <h3>Handmade Paper Journal</h3>
+                <p class="product-price">₱200</p>
+                <p class="product-origin">From Cebu</p>
+                <div class="product-actions">
+                  <a href="#" class="guest-action action-favorite" aria-label="Favorite Handmade Paper Journal"><i class="far fa-heart"></i> Favorite</a>
+                  <a href="#" class="guest-action action-cart" aria-label="Add Handmade Paper Journal to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                  <a href="#" class="guest-action action-buy" aria-label="Buy Handmade Paper Journal"><i class="fas fa-credit-card"></i> Buy Now</a>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="carousel-item product-card">
-            <img src="../../images/product-placeholder-8.jpg" alt="Beeswax Wraps">
-            <h3>Beeswax Wraps (Set)</h3>
-            <p class="product-price">₱350</p>
-            <p class="product-origin">From Benguet</p>
-            <div class="product-actions">
-              <a href="#" class="guest-action action-favorite" aria-label="Favorite Beeswax Wraps"><i class="far fa-heart"></i> Favorite</a>
-              <a href="#" class="guest-action action-cart" aria-label="Add Beeswax Wraps to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-              <a href="#" class="guest-action action-buy" aria-label="Buy Beeswax Wraps"><i class="fas fa-credit-card"></i> Buy Now</a>
-            </div>
-          </div>
-          <div class="carousel-item product-card">
-            <img src="../../images/product-placeholder-9.jpg" alt="Handmade Paper Journal">
-            <h3>Handmade Paper Journal</h3>
-            <p class="product-price">₱200</p>
-            <p class="product-origin">From Cebu</p>
-            <div class="product-actions">
-              <a href="#" class="guest-action action-favorite" aria-label="Favorite Handmade Paper Journal"><i class="far fa-heart"></i> Favorite</a>
-              <a href="#" class="guest-action action-cart" aria-label="Add Handmade Paper Journal to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-              <a href="#" class="guest-action action-buy" aria-label="Buy Handmade Paper Journal"><i class="fas fa-credit-card"></i> Buy Now</a>
-            </div>
-          </div>
-          <div class="carousel-item product-card">
-            <img src="../../images/product-placeholder-10.jpg" alt="Upcycled Tire Planter">
-            <h3>Upcycled Tire Planter</h3>
-            <p class="product-price">₱800</p>
-            <p class="product-origin">From Manila</p>
-            <div class="product-actions">
-              <a href="#" class="guest-action action-favorite" aria-label="Favorite Upcycled Tire Planter"><i class="far fa-heart"></i> Favorite</a>
-              <a href="#" class="guest-action action-cart" aria-label="Add Upcycled Tire Planter to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-              <a href="#" class="guest-action action-buy" aria-label="Buy Upcycled Tire Planter"><i class="fas fa-credit-card"></i> Buy Now</a>
-            </div>
-          </div>
-          <div class="carousel-item product-card">
-            <img src="../../images/product-placeholder-11.jpg" alt="Natural Loofah">
-            <h3>Natural Loofah</h3>
-            <p class="product-price">₱80</p>
-            <p class="product-origin">From Iloilo</p>
-            <div class="product-actions">
-              <a href="#" class="guest-action action-favorite" aria-label="Favorite Natural Loofah"><i class="far fa-heart"></i> Favorite</a>
-              <a href="#" class="guest-action action-cart" aria-label="Add Natural Loofah to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-              <a href="#" class="guest-action action-buy" aria-label="Buy Natural Loofah"><i class="fas fa-credit-card"></i> Buy Now</a>
-            </div>
-          </div>
-          <div class="carousel-item product-card">
-            <img src="../../images/product-placeholder-12.jpg" alt="Hand-painted Fan">
-            <h3>Hand-painted Fan</h3>
-            <p class="product-price">₱350</p>
-            <p class="product-origin">From Ilocos</p>
-            <div class="product-actions">
-              <a href="#" class="guest-action action-favorite" aria-label="Favorite Hand-painted Fan"><i class="far fa-heart"></i> Favorite</a>
-              <a href="#" class="guest-action action-cart" aria-label="Add Hand-painted Fan to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-              <a href="#" class="guest-action action-buy" aria-label="Buy Hand-painted Fan"><i class="fas fa-credit-card"></i> Buy Now</a>
+          <div class="carousel-item product-slide">
+            <div class="product-grid">
+              <div class="product-card">
+                <img src="../../images/product-tire-planter.jpg" alt="Upcycled tire planter from Manila">
+                <h3>Upcycled Tire Planter</h3>
+                <p class="product-price">₱800</p>
+                <p class="product-origin">From Manila</p>
+                <div class="product-actions">
+                  <a href="#" class="guest-action action-favorite" aria-label="Favorite Upcycled Tire Planter"><i class="far fa-heart"></i> Favorite</a>
+                  <a href="#" class="guest-action action-cart" aria-label="Add Upcycled Tire Planter to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                  <a href="#" class="guest-action action-buy" aria-label="Buy Upcycled Tire Planter"><i class="fas fa-credit-card"></i> Buy Now</a>
+                </div>
+              </div>
+              <div class="product-card">
+                <img src="../../images/product-natural-loofah.jpg" alt="Natural loofah from Iloilo">
+                <h3>Natural Loofah</h3>
+                <p class="product-price">₱80</p>
+                <p class="product-origin">From Iloilo</p>
+                <div class="product-actions">
+                  <a href="#" class="guest-action action-favorite" aria-label="Favorite Natural Loofah"><i class="far fa-heart"></i> Favorite</a>
+                  <a href="#" class="guest-action action-cart" aria-label="Add Natural Loofah to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                  <a href="#" class="guest-action action-buy" aria-label="Buy Natural Loofah"><i class="fas fa-credit-card"></i> Buy Now</a>
+                </div>
+              </div>
+              <div class="product-card">
+                <img src="../../images/product-handpainted-fan.jpg" alt="Hand-painted fan from Ilocos">
+                <h3>Hand-painted Fan</h3>
+                <p class="product-price">₱350</p>
+                <p class="product-origin">From Ilocos</p>
+                <div class="product-actions">
+                  <a href="#" class="guest-action action-favorite" aria-label="Favorite Hand-painted Fan"><i class="far fa-heart"></i> Favorite</a>
+                  <a href="#" class="guest-action action-cart" aria-label="Add Hand-painted Fan to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                  <a href="#" class="guest-action action-buy" aria-label="Buy Hand-painted Fan"><i class="fas fa-credit-card"></i> Buy Now</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <button class="carousel-prev" aria-label="Previous Products">❮</button>
-        <button class="carousel-next" aria-label="Next Products">❯</button>
+        <button class="carousel-prev product-prev" aria-label="Previous Product Slide">❮</button>
+        <button class="carousel-next product-next" aria-label="Next Product Slide">❯</button>
       </div>
     </section>
 
-    <section id="top-baskets" class="carousel top-baskets section-cream" role="region" aria-label="Top Baskets">
+
+    <!-- 7. Top Sellers -->
+    <section id="top-sellers" class="section-lime" role="region" aria-label="Top Sellers">
+  <div class="container">
+    <h2>Meet Our Top Sellers</h2>
+    <p class="section-description">Discover the artisans whose craftsmanship shines brightest this month.</p>
+    <div class="seller-grid">
+      <div class="seller-card">
+        <img src="../../images/seller-maria.jpg" alt="Maria from Pampanga">
+        <h3>Maria from Pampanga</h3>
+        <p>Specializing in handwoven baskets, Maria’s work blends tradition with sustainability, earning her a loyal following.</p>
+        <a href="#sellers" class="cta-link" aria-label="View Maria's products">View Products</a>
+      </div>
+      <div class="seller-card">
+        <img src="../../images/seller-juan.jpg" alt="Juan from Baguio">
+        <h3>Juan from Baguio</h3>
+        <p>Juan’s eco-friendly textiles showcase the rich weaving heritage of Baguio, loved for their vibrant patterns.</p>
+        <a href="#sellers" class="cta-link" aria-label="View Juan's products">View Products</a>
+      </div>
+      <div class="seller-card">
+        <img src="../../images/seller-luz.jpg" alt="Luz from Davao">
+        <h3>Luz from Davao</h3>
+        <p>Luz creates organic soaps using natural ingredients, offering eco-conscious self-care solutions.</p>
+        <a href="#sellers" class="cta-link" aria-label="View Luz's products">View Products</a>
+      </div>
+      <div class="seller-card">
+        <img src="../../images/seller-likhaya.jpg" alt="Likhaya Store and Cafe">
+        <h3>Likhaya Store and Cafe</h3>
+        <p>Based in an inspiring community hub, Likhaya Store and Cafe offers a unique blend of artisanal goods and cozy cafe experiences, supporting local talent with every purchase.</p>
+        <a href="#sellers" class="cta-link" aria-label="View Likhaya Store and Cafe's products">View Products</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- 8. Top Baskets -->
+    <section id="top-baskets" class="products section-cream" role="region" aria-label="Top Baskets">
       <div class="container">
         <h2>Our Most Popular Baskets</h2>
         <p class="section-description">Discover beautifully woven baskets from various regions.</p>
-        <div class="carousel-container" aria-live="polite">
-          <div class="carousel-item product-card">
-            <img src="../../images/basket-placeholder-1.jpg" alt="Market Basket">
-            <h3>Traditional Market Basket</h3>
-            <p class="product-price">₱550</p>
-            <p class="product-origin">From Laguna</p>
-            <div class="product-actions">
-              <a href="#" class="guest-action action-favorite" aria-label="Favorite Market Basket"><i class="far fa-heart"></i> Favorite</a>
-              <a href="#" class="guest-action action-cart" aria-label="Add Market Basket to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-              <a href="#" class="guest-action action-buy" aria-label="Buy Market Basket"><i class="fas fa-credit-card"></i> Buy Now</a>
-            </div>
-          </div>
-          <div class="carousel-item product-card">
-            <img src="../../images/basket-placeholder-2.jpg" alt="Picnic Basket">
-            <h3>Handwoven Picnic Basket</h3>
-            <p class="product-price">₱850</p>
-            <p class="product-origin">From Pampanga</p>
-            <div class="product-actions">
-              <a href="#" class="guest-action action-favorite" aria-label="Favorite Picnic Basket"><i class="far fa-heart"></i> Favorite</a>
-              <a href="#" class="guest-action action-cart" aria-label="Add Picnic Basket to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-              <a href="#" class="guest-action action-buy" aria-label="Buy Picnic Basket"><i class="fas fa-credit-card"></i> Buy Now</a>
+        <div class="carousel-container basket-carousel" aria-live="polite">
+          <div class="carousel-item basket-slide active" aria-current="true">
+            <div class="product-grid">
+              <div class="product-card">
+                <img src="../../images/product-market-basket.jpg" alt="Traditional market basket from Laguna">
+                <h3>Traditional Market Basket</h3>
+                <p class="product-price">₱550</p>
+                <p class="product-origin">From Laguna</p>
+                <div class="product-actions">
+                  <a href="#" class="guest-action action-favorite" aria-label="Favorite Traditional Market Basket"><i class="far fa-heart"></i> Favorite</a>
+                  <a href="#" class="guest-action action-cart" aria-label="Add Traditional Market Basket to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                  <a href="#" class="guest-action action-buy" aria-label="Buy Traditional Market Basket"><i class="fas fa-credit-card"></i> Buy Now</a>
+                </div>
+              </div>
+              <div class="product-card">
+                <img src="../../images/product-picnic-basket.jpg" alt="Handwoven picnic basket from Pampanga">
+                <h3>Handwoven Picnic Basket</h3>
+                <p class="product-price">₱850</p>
+                <p class="product-origin">From Pampanga</p>
+                <div class="product-actions">
+                  <a href="#" class="guest-action action-favorite" aria-label="Favorite Handwoven Picnic Basket"><i class="far fa-heart"></i> Favorite</a>
+                  <a href="#" class="guest-action action-cart" aria-label="Add Handwoven Picnic Basket to Cart"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
+                  <a href="#" class="guest-action action-buy" aria-label="Buy Handwoven Picnic Basket"><i class="fas fa-credit-card"></i> Buy Now</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <button class="carousel-prev" aria-label="Previous Baskets">❮</button>
-        <button class="carousel-next" aria-label="Next Baskets">❯</button>
+        <button class="carousel-prev basket-prev" aria-label="Previous Basket Slide">❮</button>
+        <button class="carousel-next basket-next" aria-label="Next Basket Slide">❯</button>
+      </div>
+    </section>
+
+
+    <!-- 9. How a Product is Made -->
+    <section id="how-its-made" class="section-lime" role="region" aria-label="How a Product is Made">
+      <div class="container">
+        <h2>From Farm to Table: Crafting Our Coffee</h2>
+        <p class="section-description">Learn how our artisanal coffee is made with care and tradition.</p>
+        <div class="process-grid">
+          <div class="process-step">
+            <img src="../../images/process-coffee-harvest.jpg" alt="Harvesting coffee cherries in Batangas">
+            <h3>1. Harvesting the Cherries</h3>
+            <p>In Batangas, farmers hand-pick ripe coffee cherries, ensuring only the best are selected for processing.</p>
+          </div>
+          <div class="process-step">
+            <img src="../../images/process-coffee-drying.jpg" alt="Drying coffee beans under the sun">
+            <h3>2. Drying the Beans</h3>
+            <p>The cherries are sun-dried for weeks, a traditional method that enhances flavor while being eco-friendly.</p>
+          </div>
+          <div class="process-step">
+            <img src="../../images/process-coffee-roasting.jpg" alt="Roasting coffee beans by hand">
+            <h3>3. Roasting with Care</h3>
+            <p>Artisans roast the beans by hand, controlling the heat to bring out rich, aromatic notes.</p>
+          </div>
+          <div class="process-step">
+            <img src="../../images/process-coffee-packaging.jpg" alt="Packaging coffee in eco-friendly bags">
+            <h3>4. Sustainable Packaging</h3>
+            <p>The final product is packed in biodegradable bags, ready to bring joy to your mornings.</p>
+          </div>
+        </div>
+        <div class="cta-buttons">
+          <a href="#products" class="cta-button primary" aria-label="Shop coffee products">Shop Our Coffee</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 10. Sellers -->
+    <section id="sellers" class="section-lime" role="region" aria-label="Seller Information">
+      <div class="container">
+        <h2>Join Our Artisan Network</h2>
+        <p>Showcase your crafts and grow your business with eTinda.</p>
+        <div class="seller-content">
+          <p>Manage your products, track orders, and connect with buyers—all from your personalized dashboard.</p>
+          <a href="#join-us" class="cta-button primary" aria-label="Become a seller">Become a Seller</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 11. Testimonials/Artisan Stories -->
+    <section id="testimonials" role="region" aria-label="Artisan Stories">
+      <div class="container">
+        <h2>Voices of Our Artisans</h2>
+        <div class="testimonial">
+          <p>“eTinda transformed my life by letting me sell my baskets globally, supporting my family’s future.”</p>
+          <h4>- Maria, Pampanga</h4>
+        </div>
+        <div class="testimonial">
+          <p>“Thanks to eTinda, my textile business thrives, and I can teach my craft to the next generation.”</p>
+          <h4>- Juan, Baguio</h4>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 12. Join Us -->
+    <section id="join-us" class="section-cream" role="region" aria-label="Join eTinda Community">
+      <div class="container">
+        <h2>Be Part of the Movement</h2>
+        <p>Join thousands of conscious shoppers and talented artisans. Earn ePoints with every purchase and unlock exclusive perks!</p>
+        <div class="cta-buttons" role="group">
+          <a href="#products" class="cta-button primary" aria-label="Join as a buyer">Shop & Earn Points</a>
+          <a href="#sellers" class="cta-button secondary" aria-label="Join as a seller">Sell & Grow</a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 13. Contact -->
+    <section id="contact" class="section-lime" role="region" aria-label="Contact eTinda">
+      <div class="container">
+        <h2>Get in Touch</h2>
+        <p>We’d love to hear from you! Reach out for support or partnership opportunities.</p>
+        <form>
+          <input type="text" placeholder="Your Name" aria-label="Your Name">
+          <input type="email" placeholder="Your Email" aria-label="Your Email" required>
+          <textarea placeholder="Your Message" aria-label="Your Message" required></textarea>
+          <button type="submit" class="cta-button primary" aria-label="Send Message">Send</button>
+        </form>
+      </div>
+    </section>
+
+
+    <!-- 14. Newsletter -->
+    <section id="newsletter" class="section-cream" role="region" aria-label="Newsletter Subscription">
+      <div class="container">
+        <h2>Stay Inspired</h2>
+        <p>Subscribe to receive the latest artisan stories, product launches, and sustainability tips.</p>
+        <form>
+          <input type="email" placeholder="Enter your email" aria-label="Email for newsletter" required>
+          <button type="submit" class="cta-button primary" aria-label="Subscribe to newsletter">Subscribe</button>
+        </form>
       </div>
     </section>
   </main>
 
+
+  <footer role="contentinfo">
+    <p>© 2025 eTinda. All rights reserved. | <a href="#contact">Contact Us</a> | <a href="#join-us">Join Us</a></p>
+  </footer>
+
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const carousel = document.querySelector('.hero-carousel .carousel-container');
-      const prevButton = document.querySelector('.hero-carousel .carousel-prev');
-      const nextButton = document.querySelector('.hero-carousel .carousel-next');
-      const slides = document.querySelectorAll('.hero-carousel .carousel-item');
-      let currentIndex = 0;
+      // Hero Carousel
+      const heroCarousel = document.querySelector('.hero-carousel .carousel-container');
+      const heroPrevButton = document.querySelector('.hero-carousel .carousel-prev');
+      const heroNextButton = document.querySelector('.hero-carousel .carousel-next');
+      const heroSlides = document.querySelectorAll('.hero-carousel .carousel-item');
+      const heroIndicators = document.querySelectorAll('.hero-carousel .carousel-indicators .indicator');
+      let heroIndex = 0;
 
-      function showSlide(index) {
-        slides.forEach((slide, i) => {
+
+      function showHeroSlide(index) {
+        heroSlides.forEach((slide, i) => {
           slide.classList.toggle('active', i === index);
+          slide.setAttribute('aria-current', i === index ? 'true' : 'false');
+        });
+        heroIndicators.forEach((indicator, i) => {
+          indicator.classList.toggle('active', i === index);
+          indicator.setAttribute('aria-selected', i === index ? 'true' : 'false');
         });
       }
 
-      prevButton.addEventListener('click', () => {
-        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-        showSlide(currentIndex);
+
+      heroPrevButton.addEventListener('click', () => {
+        heroIndex = (heroIndex - 1 + heroSlides.length) % heroSlides.length;
+        showHeroSlide(heroIndex);
       });
 
-      nextButton.addEventListener('click', () => {
-        currentIndex = (currentIndex + 1) % slides.length;
-        showSlide(currentIndex);
+
+      heroNextButton.addEventListener('click', () => {
+        heroIndex = (heroIndex + 1) % heroSlides.length;
+        showHeroSlide(heroIndex);
       });
 
-      // Initialize the first slide
-      showSlide(currentIndex);
+
+      heroIndicators.forEach((indicator, i) => {
+        indicator.addEventListener('click', () => {
+          heroIndex = i;
+          showHeroSlide(heroIndex);
+        });
+      });
+
+
+      showHeroSlide(heroIndex);
+
+
+      // Product Carousel (Top Products)
+      const productCarousel = document.querySelector('#top-products .carousel-container');
+      const productPrevButton = document.querySelector('#top-products .carousel-prev');
+      const productNextButton = document.querySelector('#top-products .carousel-next');
+      const productSlides = document.querySelectorAll('#top-products .carousel-item');
+      let productIndex = 0;
+
+
+      function showProductSlide(index) {
+        productSlides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+          slide.setAttribute('aria-current', i === index ? 'true' : 'false');
+        });
+      }
+
+
+      productPrevButton.addEventListener('click', () => {
+        productIndex = (productIndex - 1 + productSlides.length) % productSlides.length;
+        showProductSlide(productIndex);
+      });
+
+
+      productNextButton.addEventListener('click', () => {
+        productIndex = (productIndex + 1) % productSlides.length;
+        showProductSlide(productIndex);
+      });
+
+
+      showProductSlide(productIndex);
+
+
+      // Basket Carousel (Top Baskets)
+      const basketCarousel = document.querySelector('#top-baskets .carousel-container');
+      const basketPrevButton = document.querySelector('#top-baskets .carousel-prev');
+      const basketNextButton = document.querySelector('#top-baskets .carousel-next');
+      const basketSlides = document.querySelectorAll('#top-baskets .carousel-item');
+      let basketIndex = 0;
+
+
+      function showBasketSlide(index) {
+        basketSlides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+          slide.setAttribute('aria-current', i === index ? 'true' : 'false');
+        });
+      }
+
+
+      basketPrevButton.addEventListener('click', () => {
+        basketIndex = (basketIndex - 1 + basketSlides.length) % basketSlides.length;
+        showBasketSlide(basketIndex);
+      });
+
+
+      basketNextButton.addEventListener('click', () => {
+        basketIndex = (basketIndex + 1) % basketSlides.length;
+        showBasketSlide(basketIndex);
+      });
+
+
+      showBasketSlide(basketIndex);
+
+
+      // Burger Menu Toggle
+      const menuToggle = document.querySelector('.menu-toggle');
+      const navLinks = document.querySelector('.nav-links');
+
+
+      menuToggle.addEventListener('click', () => {
+        const isExpanded = navLinks.classList.toggle('active');
+        menuToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+      });
+
+
+      menuToggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const isExpanded = navLinks.classList.toggle('active');
+          menuToggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+        }
+      });
+
+
+      // Search Functionality
+      const searchInput = document.getElementById('search-main');
+      const searchResults = document.getElementById('search-results');
+      const products = [
+        { name: 'Handwoven Basket', origin: 'Pampanga', price: '₱500' },
+        { name: 'Eco-friendly Textile', origin: 'Baguio', price: '₱750' },
+        { name: 'Organic Soap', origin: 'Davao', price: '₱400' },
+        { name: 'Bamboo Straws', origin: 'Laguna', price: '₱150' },
+        { name: 'Abaca Placemat', origin: 'Bicol', price: '₱300' },
+        { name: 'Classic Bayong Bag', origin: 'Quezon', price: '₱600' }
+      ];
+
+
+      function searchProducts() {
+        const query = searchInput.value.toLowerCase();
+        const feedback = document.getElementById('search-feedback');
+        searchResults.innerHTML = '';
+
+
+        if (query) {
+          feedback.textContent = `Searching for "${query}"...`;
+          const results = products.filter(product =>
+            product.name.toLowerCase().includes(query) || product.origin.toLowerCase().includes(query)
+          );
+
+
+          if (results.length > 0) {
+            results.forEach(product => {
+              const resultItem = document.createElement('div');
+              resultItem.className = 'search-result-item';
+              resultItem.innerHTML = `<strong>${product.name}</strong> - ${product.price} (${product.origin})`;
+              searchResults.appendChild(resultItem);
+            });
+            feedback.textContent = `${results.length} result(s) found.`;
+          } else {
+            feedback.textContent = 'No results found. Try a different search.';
+          }
+        } else {
+          feedback.textContent = 'Please enter a search term.';
+        }
+        setTimeout(() => feedback.textContent = '', 3000); // Clear feedback after 3 seconds
+      }
+
+
+      // Real-time search on input
+      searchInput.addEventListener('input', searchProducts);
     });
   </script>
 </body>
