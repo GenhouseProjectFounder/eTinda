@@ -18,7 +18,7 @@ serve({
 
     // Serve static files from public
     if (path === '/' || path.startsWith('/public') || path.endsWith('.html') || path.endsWith('.css') || path.endsWith('.js')) {
-      let filePath = path === '/' ? 'public/index.html' : path.slice(1);
+      let filePath = path === '/' ? 'public/index.html' : `public${path}`;
       try {
         const file = await Bun.file(filePath).text();
         const contentType = filePath.endsWith('.html') ? 'text/html' :
